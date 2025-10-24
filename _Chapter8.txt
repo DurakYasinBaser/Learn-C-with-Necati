@@ -1,0 +1,350 @@
+																				CONSTANTS (SABITLER)
+									----------------------------------------------------------------------------------------------------
+
+	SABITLER BIRER TOKEN'DIR
+
+	Örnek;
+
+	int x = 45;
+	int y = 3.328 birer sabitlerdir.
+
+	NOT: C dili standardýnda 'constant' derken C++ dili standardda 'literal' sözcüðünü kullanýyor.
+
+	Nasýl deðiþkenlerin ve ifadelerin türleri varsa, sabitlerinde türleri vardýr.  
+
+	C dilinde nelerin türleri vardýr ?
+
+		-	Deðiþkenlerin	(Variable)
+		-	Ýfadelerin		(Expression)
+		-	Sabitlerin		(Constant)
+	
+		C dili sabitleri 2 kategoriye ayýrýyor;
+			
+				1.Integer Constant
+			
+				2.Floating Constant
+
+		Ýfadelerin türleri ile sabitlerin türleri ayný kurallara tabi deðildir. 
+
+		Sabitlerin türleri;
+
+		Integer(Tam Sayi)										floating constants(Gerçek Sayýlar)
+
+		int														float
+		unsigned int											double
+																long double
+		long						
+		unsigned long
+
+		long long
+		unsigned long long
+
+
+		NOT:  C dilinde Constant'larda integer(tam sayý türlerde)'da int altý türler yoktur. 
+
+		NOT:  Bir sabitin türü hex/octal/decimal deðildir. Bunlar saibitn yazýmýnda kullanýlabilecek sayý sistemleridir. 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+																			SAYI SISTEMLERI
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NOT:	Default olarak her zaman decimal(Onluk Sayi Sistemi)'dir
+
+int main(void)
+{
+	int x = 9721;
+	printf("x = %d\n", x); // 9721
+	//Hexadecimal System
+	x = 0x41;
+	printf("x = %d\n", x); // 65
+	//Hexadecimal System
+	x = 0xab;
+	printf("x = %d\n", x);   // 171
+	//Octal System
+	x = 035;
+	printf("x = %d\n", x);   //29
+
+}
+
+		NOT: C dilinde bir sabiti binary (ikilik sayý sisteminde) system'de yazmak mümkün deðildir. Std deðildir.
+
+
+		NOT: C++ dilinde digit seperator denilen bir özellik C dilinde yoktur. Yazýlan sabitin okunmasýný kolaylaþtýrmak için basamaklarý 'single code karakterinin ' basamaklarý birbirinden görsel olarak ayýrmasý amacýyla kullanýlýyor.
+
+		Örneðin;
+
+		int x = 0b1010'0101; // compiler extantion 
+
+		x = 0123'321;
+
+		x = 788'723'433; 
+
+
+		DIKKAT : ANCAK C DÝLÝNDE BÖYLE BÝR ÖZELLÝK YOKTUR. SADECE COMPILER EXTANTION OLARAK EKLENEBÝLÝR BUDA PORTABLEITY (TASINABILIRLIGI KALDIRIYOR)
+
+
+		1.	Eðer yazýlan sabit (hangi sayý sisteminde yazýldýðýndan baðýmsýz olarak) sistemdeki 'int' türü sýnýrlarý içerisinde kalýyor ise sabitin türü int'tir.
+
+		Örnek;
+
+			7623 -> (int türü benim sistemimde  4 Byte ve 0 ie 2'147'483'647 arasýnda bir deðer olursa benim sabitimin türü int'tir.)
+			
+			-764	// iþaret operatörü '-' operandý 764 sabiti olmuþ. Yani sabitin kendisi 764 ;
+
+			+981    // Sabit 981, önündeki '+' ifadedeki bir operatördür.
+
+
+		SORU:  
+
+		0x1ac4 Sabitin türü int'tir. Çünkü deðeri int sýnýrlarý içerisindedir. (6852)
+
+
+		SABÝTÝN TÜRÜNÜ
+
+		INTEGER (TAM SAYI SABITLERI) 
+
+		Unsigned int yapmak için son ek (suffix)				u yada U
+
+		Long yapmak için son ek (suffix)						l yada L
+
+		Unsigned Long yapmak için son ek (suffix)				ul yada UL  etc.
+
+		Long Long yapmak için son ek(suffix)					ll / LL / etc.
+
+		Unsigned long long yapmak için son ek (suffix)			ull / ULL / etc.
+
+		! DÝKKAT : her ne kadar son ek 'l' sabitin türünün long olduðunu gösterse de programcýlar çoðunlukla bu son eki kullanmazlar 'L' ekini kullanýrlar.
+
+		FLOAT (GERCEK SAYI SABITLERI)
+
+		Float					3.4f  /  4.7F (. içeriyor ve f varsa, eðer nokta içermiyorsa ve 4F yazýlmýþsa sentaks hatasý)	
+
+		Double					4.6		(nokta içermesi yeterli) (5. == 5.0)
+
+		Long double				45.L    (Hem nokta içeriyor hemde L var o zaman long double)
+
+		NOT:  23.823	(Fixed)
+			  3.45981e2 (Scientific) (3.45981 x 10 üzeri 2 demek)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+																	KARAKTER SABITLERI (CHARACTER LITERALS)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Karakter Sabitleri (Character Literals): C dilinde karakter sabitleri   'int' türden sabitlerin özel bir yazým biçimidir.
+										 C++ dilinde karakter sabitleri 'Char' türdendir.
+
+ Bir karakter sabiti '' (single code) karakterlerin içerisine yazýlmasý ile oluþturuluyor.
+ 
+ Örneðin;
+
+ 'a'
+ 
+ '\n'
+ 
+ 'x12'
+ 
+ '023'
+
+	Character Encoding (Karakter kodlamasý) : Kullandýðýmýz PC'nin bir karakter kodlama sistemi vardýr iþletim sisteminin destek verdiði.
+
+				1.	Karakter setinde hangi karakterler var (Kaç karakter var)
+					ASCII karakter seti 128 karakterden oluþur ve hepsinin sözel tanýmý vardýr.
+
+				2.	Karakter setinde olan her bir karakter bir tam sayý ile ifade edilir. 
+
+					
+				Character Code / Coding Place	
+							
+								
+							A							--->						0x41								--->				65
+							
+							3							--->						0x33								--->				51
+
+				3. Ýkilik Sayý sisteminde nasýl tutulacak ? 
+
+				1 Byte 8 bit  1 biti boþa çýkartsak 7 bitte 128 karakteri tutarým.
+
+				BABA
+
+				66/65/66/65   --> ----/----/----/----    ----/----/----/----   ----/----/----/----		----/----/----/----
+
+
+				ASCII KARAKTER SETI HAKKINDA BILMEMIZ GEREKENLER;
+
+					128 Karakter vardýr.
+					Her birinin bir karakter kodu vardýr. 
+					Büyük harf karakterler 0x41 ve decimal 65'den baþlarlar ve ardýþýktýr.
+
+					
+					0x41					65					A
+					...						90					Z
+					x
+					x
+					x
+					x
+					x
+					x
+																a
+
+
+					NOT:	Küçük harf karakterler büyük harflerin bittiði yerden baþlamaz. 
+					
+					NOT:	Büyük harf küçük harf dönüþümlerinin kolay yapýlmasý için arada o 6 tane karakter vardýr. Arada 6 karakter var ise 26 tane de harf karakteri varsa;
+					
+					Bir karakterin büyüðü ile küçüðü arasýnda kaç fark olur ? (32 fark) 2e5 yani eðer bir byte bir büyük harf karakterin kodunu taþýyorsa onun 5. bitini 1 yaptýðýmýzda;
+
+					--0-----	Büyük harf B 66 ise
+					--1-----	Küçük harf b 98'dir
+
+					Rakam karakterleri; 
+
+					0x30					48				0
+					0x31					49				1
+					0x32					50				2
+					0x33					51				3
+					x
+					x
+					x
+					x
+					x
+					x						57				9
+
+					0011 |	0000			48				0
+					0011 |	0001			49				1
+					0011 |	0010			50				2
+					0011 |	0011			51				3
+					0011 |	0100			52				4
+					0011 |	0101			53				5
+					0011 |	0110			54				6
+					0011 |	0111			55				7
+					0011 |	1000			56				8
+					0011 |	1001			57				9
+
+					NOT:	(Düþük anlamlý nibble'a bakarsak hangi karakterin koduysa düþük anlamlý nibble ý o karaktere karþýlýk gelen sayý deðeridir.)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+alphabetic			Character (Harf Karakteri)
+Numeric				Character (Rakam Karakteri)
+Alphanumeric		Character (Harf yada rakam karakteri)
+Control				Character (Kontrol Karakterleri)        0-31 dahil tüm karakterler ve 127 numaralý karakterler kontrol karakterleridir.
+Printable/graphic	Character								Eðer  kontrol karakteri deðil ama görüntüsü varsa 
+Punctuation			Character								Görüntüsü olan (printable) alphanumeric olmayan karakterlerin grubuna  denir.
+
+
+Ne demiþtik karakter sabitleri 'a' özel bir bir yazým biçiminde olan int türünde sabitlerdir. 
+
+	'A' yazarsak o karakterin sistemindeki karakter kodlamasýndaki kod  numarasý neyse onu yazmýþ oluruz.
+
+int main(void)
+{
+	int c = '+';
+	printf("%d\n", c);
+}
+
+output: 43
+
+
+NOT:
+
+	
+Önemli: 'A' ile 65 arasýnda ne gibi fark var ? 
+
+Cevap: C++'da 'A' char türden 65 ise int türden fakat C'de ikiside int türden. Buradaki fark karakter kodlama sistemi farký olabilir. Farklý bir karakter kodlama sisteminde
+65, 'A' olmayabilir.
+
+
+NOT:	Rakam karakterlerinin ardýþýk olmasý garanti altýndadýr. Hangi karakter kodlama sistemi olursa olsun rakam karakterleri ardýþýktýr.
+
+		Örneðin;
+
+		'0' + 5 Bu tam sayý deðerinin 5'in kodu olma garantisi vardýr.
+
+		Fakat harf karakterlerinin ardýþýk olma garantisi yoktur.
+
+		'A' + 3 ASCII'de 'D' dir. Ama tüm karakter kodlama sistemlerinde ayný olmayabilir.
+
+Escape squence: Genel olarak bir kodlamada bir karaktere özel bir anlam biçilmiþse yani kendi deðeri olarak deðil de onun dýþýnda bir anlam ifade ediyorsa böyle karakterlere escape 
+denir.
+
+	'\??' Bir escape olarak kullanýlýr. Backslash'ten sonra kullanýlan karaktere göre anlamý deðiþir.
+	
+	'\??'  Bazý karakterler özel anlama sahiptir.
+	'\0'  null character
+	'\a'  alarm/alert character
+	'\n'  New line
+	'\r'  carriage return
+	'\b'  back space (geri boþluk)
+	'\t'  horizontal tab
+	'\f'  form feed karakteri
+	'\v'  vertical tab
+
+	'\\' back space
+	'\'' single quote
+	'"'  double quote
+	'?'  Soru iþareti
+	'\?' Soru iþareti
+
+
+int main(void)
+{
+	printf("%d\n", '\n'); // new line				10
+	printf("%d\n", '\t'); // hor. tab				9
+	printf("%d\n", '\v'); // ver. tab				11
+	printf("%d\n", '\a'); // alert					7
+	printf("%d\n", '\r'); // carriage return		13
+	printf("%d\n", '\b'); // back space				8
+	printf("%d\n", '\f'); // form feed				12
+	printf("%d\n", '\\'); // backslah				92
+	printf("%d\n", '\''); // single quote           39
+	printf("%d\n", '"');  // double quote			34
+	printf("%d\n", '\?'); // Question mark			63
+	printf("%d\n", '?');  // Question mark			63
+	printf("%d\n", '\0'); // null character			0
+
+}
+
+
+
+int main(void)
+{
+	// '\x1a'   26
+	// '\x3F'   63
+	// '\012'   10
+}
+
+
+	NOT:	Formetted Output:
+
+int main(void)
+{
+	int x = 10;
+	printf("decimal %d\n", x);
+	printf("hex     %x\n", x);
+	printf("HEX     %X\n", x);
+	printf("Octal   %o\n", x);
+}
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  
+																	STANDARD LIBRARY
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+C dili tarafýndan önceden belirlenmiþ, saptanmýþ þekilde hazýr olarak sunulan ögeler.
+
+Ne var bu kütüphanede;
+
+		1.	Standard C Functions   (strlen, abs, atoi, printf, putchar)
+		2.	Makro(s)			   (Öniþlemci programa tanýtýlan isimler)
+				(Object-like macro) | (Function-like makro)
+		3.	User-defined types 
+		4.	Type alias (int32_t / int16_t)
+
+Neden Standard Kütüphane var, Faydasý Nedir ? 
+
+		1.	Common interface (Ortak arayüz): Böylece kodlarýn okunmasý ve yazýlmasý kolaylaþýr
+			sqrt(abs(x)) matematikteki ortak dil gibi "mutlak deðerinin karekökü" anlamýna gelir.
+		2.	Yazma yazýlmýþý var. (Verim riski, hata riski ve test etme zorunlulupu gelir eðer biz yazarsak) 
+		3.	Portability (Taþýnabilirlik).
+
+
+		2 Saat 48. Dakikada Kaldým.

@@ -1,0 +1,287 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+Örnek;
+
+int main(void)
+{
+	char str[] = "Durak Yasin Baser";
+	int age = 34;
+	///
+
+	printf("Name: %s\nAge: %d", str, age);
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Double --> %f
+Float  --> %f
+
+ÖRNEK
+
+int main(void)
+{
+	// x = 5, y = 3, z = 2 olsun. output 5*5+3*3+2*2 = 38
+	int x, y, z;
+	printf("3 Sayi Giriniz: \n");
+	(void)scanf("%d%d%d", &x, &y, &z);
+	printf("%d*%d+%d*%d+%d*%d = %d", x, x, y, y, z, z, x * x + y * y + z * z);
+
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Örnek;
+
+int sum_square(int x, int y)
+{
+	return x * x + y * y;
+}
+
+int ndigit(int x)
+{
+	if (x == 0)
+		return 1;
+	int digit_count = 0;
+	while (x) {
+		digit_count++;
+		x /= 10;
+	}
+	return digit_count;
+}
+int main(void)
+{
+	int number;
+	printf("Bir Sayi Giriniz:\n");
+	(void)scanf("%d", &number);
+	printf("Sayi %d Basamaklidir.\n", ndigit(number));
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Örnek;
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <math.h>
+
+
+
+int main(void)
+{
+	double dval;
+	printf("Gercek Sayi Giriniz:\n");
+	(void)scanf("%lf", &dval);
+	printf("%f Karekoku : %f\n", dval, sqrt(dval));
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+int main(void)
+{
+	int percentage = 30;
+	printf("Benim Bu Satistan Kazancim %% %d", percentage);
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+NOT: printf fonksiyonunun geri dönüþ deðeri printf çaðrýsý sonucunda std. output'a yazýlan karakter sayýsýdýr.
+
+Örnek;
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <math.h>
+
+
+
+int main(void)
+{
+	int x = 232434;
+	int y = 902;
+	int n = printf("x = %#X", x*y);
+	printf("\nn = %d\n", n);
+
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Örnek;
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <math.h>
+
+
+
+int main(void)
+{
+	int x = 232434;
+	printf("%d", printf("%d", printf("%d", x)));
+}
+
+OUTPUT: 23243461
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+																		scanf() Function
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+scanf fonksiyonunun bildirimi <stdio.h> baþlýk dosyasýndadýr.
+scanf fonksiyonu da printf fonksiyonu gibi variadic bir fonksiyondur.
+
+int scanf(const char*, ...);
+
+scanf fonksiyonu standard input stream'den alýnan karakterleri kullanarak, bizim istediðimiz formatlama özelliklerine göre bizim deðiþken yada deðiþkenlerimize deðer yükleyen program.
+
+buffer(tampon): Bir takým bilgileri depolamak için kullanýlan bir bellek alanýdýr.
+
+scanf fonksiyonunun printf fonksiyonundan farklý olarak call by value deðil, call by referance olmasý mecburidir. 
+
+	NOT:	scanf gunc. conversion specififier'larýný tam olarak öðrenene kadar conversion specifier dýþýnda boþluk karakteri bile vermeyin. Hepsinin ayný birer anlamý var.
+	NOT:	scanf function's ýn baþarýsýz olma ihtimali printf'e göre çok daha yüksektir. 
+	NOT:	Scanf'in geri dönüþ deðeri set edilen deðiþken sayýsýdýr. 
+
+	Örnek;
+
+int main(void)
+{
+	int x;
+	printf("Bir Tam Sayi Girin:\n");
+	scanf("&d", &x);			// kaç tane deðiþkeni set etmesini istedim. (Cevap : 1)
+
+	printf("X = %d", x);
+}
+
+// Baþarýlý olursa hangi deðeri döndürecek "1";
+// Baþarýsýz olma durumunda "0" döndürecek.
+
+
+
+Örneðin;
+
+	int x,y,z;
+	printf("Bir Tam Sayi Girin:\n");
+	scanf("&d", &x,&y,&z);
+
+	// Ýþlemin ne derece baþarýlý olup 
+	3'ünüde set etmiþ olabilir
+	2'sini set etmiþ olabilir
+	1'ini set etmiþ olabilir
+	hiç birini set etmemiþ olabilir.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	Yapýlan scanf çaðrýsýna karþýlýk kullanýcý, 134AB ve enter'a bastý;
+	49
+	51
+	52
+	65
+	66
+	+ Enter (New line) 10 
+
+	std. inputun buffer'ýnda bu karakterler olacak.
+
+	NOT:
+	Bu karakterleri kullanýrsa buffer'dan cýkartacak. (extract edecek)
+	Kullanmazsa std. inputun buffer'ýnda kalmaya devam edecek.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Örneðin;
+
+	int main(void)
+{
+	int x;
+	int y;
+
+	printf("Giris Yapin:\n");
+	(void)scanf("%d", &x);  //123ab
+
+	printf("X=%d\n", x);
+
+	// std. inputun buffer'ýnda 'ab' duruyor.
+
+	(void)scanf("%x", &y);
+	printf("Y = %d", y);
+	// simdi std. inputun buffer'ý boþ
+	
+
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Örnek;
+
+int main(void)
+{
+	int x;
+	double d;
+	int y;
+
+	printf("Giris Yapin:\n"); // 71.4329ba
+	(void)scanf("%d", &x);	 
+	(void)scanf("%lf", &d);	//
+	(void)scanf("%x", &y);
+	printf(" X = %d\n", x); // 71
+	printf(" D = %lf\n", d);//.4329
+	printf(" Y = %x\n", y);//ba
+}
+
+OUTPUT: 
+
+X = 71
+D = 0.4329
+Y = ba
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	NOT: Giriþ iþleminde new line i zorunlu alan, ve ancak o zaman giriþin tamamlandýðýný varsayan fonksiyonlara line-buffered fonksiyon denir.
+		 Scanf is a line-buffered input function.
+
+	NOT: Return value of scanf
+
+	NOT: Scanf function geri dönüþ deðeri 'int' türdendir. Printf gibi deðil set ettiði alan sayýsýdýr.
+
+
+
+int main(void)
+{
+	int age;
+	char name[20];
+	char surname[20];
+
+	printf("Isim Soyisim ve Yas Bilgilerinizi Giriniz:\n");
+	(void)scanf("%s%s%d", name, surname, &age);					// Bu örnekte age variable'ýnýn önüne adress of operatoru getirilmesine karsýn name ve surname variable'larýna & operatörü getirilmedi. Sebebi Array decay kuralýndan kaynaklý. 
+	printf("Isim %s Soyisim %s Yas %d", name, surname, age);
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+int max2(int x, int y)
+{
+	return x > y ? x : y;
+}
+int main(void)
+{
+	int x, y, z, t;
+	printf("4 Tam Sayi Giriniz:\n");
+	(void)scanf("%d%d%d%d", &x, &y, &z, &t);
+	printf("Sayilardan En Buyuk Olan : %d", max2(max2(x, y), max2(z, t)));
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Örnek;
+
+// Bir tam sayinin basamaklarýnýn toplamýný hesaplayan fonksiyonu yazýnýz.
+
+int sum_digit(int x)
+{
+	int result = 0;
+
+	while (x) {
+		result += x % 10;
+		x /= 10;
+
+	}
+
+	return result;
+}
+
+int main(void)
+{
+	printf("Bir Tam Sayi Giriniz:\n");
+	int x;
+
+	(void)scanf("%d", &x);
+	printf("Girilen Tam Sayinin Basamaklari Toplami = %d\n", sum_digit(x));
+
+
+}
+
+

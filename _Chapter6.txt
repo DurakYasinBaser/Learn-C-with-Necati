@@ -1,0 +1,373 @@
+name hiding(ismin gizlenmesi)
+name masking(ismin maskelenmesi)
+name shadowing
+
+Yukarýdaki terimlerin hepsi ayný anlamdadýr.
+
+int x = 77;
+int main(void) 
+{
+	int x = 23;
+	printf("x = %d\n", x);
+	return 0;
+}
+
+// Burada 10. satýrdaki x deðiþkeni 7. satýrdaki x deðiþkenini gizler.
+
+// Bu duruma "name hiding" denir.
+
+// Ayný zamanda "name masking" veya "name shadowing" de denir.
+
+ Global deðiþkenler, fonksiyonlarýn içinde tanýmlanan yerel deðiþkenler tarafýndan gizlenebilirler.	
+ Bu durumda, fonksiyonun içinde kullanýlan deðiþken, fonksiyonun dýþýnda tanýmlanan deðiþkenden farklýdýr.
+ Bu nedenle, fonksiyonun içinde yapýlan deðiþiklikler, global deðiþkeni etkilemez.
+ Eðer fonksiyonun içinde global deðiþkene eriþmek isterseniz, C dilinde bu mümkün deðildiir. Ama C++'da "extern" anahtar kelimesini kullanabilirsiniz.
+ ::x operatörü (scope resolation operatörü), global deðiþkene eriþmek için kullanýlýr. Ancak bu C++'a özgü bir özelliktir ve C dilinde geçerli deðildir. C dilinde global deðiþkene eriþmek için farklý bir yöntem yoktur.
+
+// Örneðin:
+
+int main(void) 
+{
+	int x = 23; // yerel deðiþken
+	printf("x = %d\n", x); // yerel deðiþkeni kullanýr
+	printf("global x = %d\n", ::x); // global deðiþkene eriþir (C++'da geçerlidir)
+	return 0;
+}
+
+// Örneðin:
+
+#include <stdio.h>
+
+int x = 77;
+int main(void)
+{
+	int x = 88;
+	printf(" Local X = %d\n", x);
+	printf("Global X = %d\n", ::x);
+
+}	
+// Çýktý: Local X = 88
+// Çýktý: Global X = 77
+
+
+Örneðin:
+
+#include <stdio.h>
+
+int x = 23;
+int main(void)
+{
+	int x = 7;
+	::x += x;
+	printf("x = %d\n", ::x);
+
+}
+// Çýktý: x = 30
+
+
+Örneðin:
+
+#include <stdio.h>
+
+int x = 1;
+
+void foo(void)
+{
+	printf("[8] %d\n", x); //1
+}
+int main(void)
+{
+	printf("[1] %d\n", x); //1 
+	int x = 3;
+	printf("[2] %d\n", x);	//3
+	{
+		printf("[3] %d\n", x);	//3
+		int x = 5;
+		printf("[4] %d\n", x); //5
+		{
+
+			int x = 7;
+			printf("[5] %d\n", x); // 7
+		}
+		printf("[6] %d\n", x); //5
+	}
+	printf("[7] %d\n", x); //3
+	foo();
+
+}
+// Çýktý: [1] 1
+// Çýktý: [2] 3
+// Çýktý: [3] 3
+// Çýktý: [4] 5
+// Çýktý: [5] 7
+// Çýktý: [6] 5
+// Çýktý: [7] 3
+// Çýktý: [8] 1
+
+NOT: Ýçerdeki blok anlamýnda kullanýlan terim nested block, iç blok varken onu kapsayan bloða enclosing block denir.
+
+DAKÝKA 45 DE KALDIM. 
+
+													FUNCTIONS 
+
+Baþka programlama dillerinde method, procedure, subroutine olarakta geçer C'de ise fonksiyon.
+Funksiyon aslýnda bir koddur ve bu kodun gerçekleþtirdiði bir iþ gerçekleþtirir.
+
+to define a function  (Tanýmlamak)
+	Function definition(Fonksiyon tanýmý)
+to call a function	  (Fonksiyona çaðrý yapmak)
+	Function call(Fonksiyon çaðrýsý)
+to declare a function (Fonksiyonu bildirmek)
+	Function Declaration(Fonksiyon bildirimi)
+
+	Fonksiyon çaðýran koddan veri-verileri alýp, Bu verileri kullanarak iþlemi gerçekleþtiren ve sonra onu çaðýran koda veri-verileri ileten koddur.
+
+	Fonksiyonun, kendisini çaðýran koddan bir deðer almasý zorunlu deðildir. Ayný þekilde fonksiyon gerçekleþtirdiði iþlemler neticesinde kendisini çaðýran
+koda bir geri dönüþ deðeri vermesi de zorunlu deðildir.
+
+	Fonksiyon çaðrýsýyla ilgili fonksiyona gönderilen deðerlere "Argument" denir.
+		"Argument" olarak gönderilen bu deðerlerin fonksiyonun sahip olduðu bazý deðiþken-deðiþkenlerde tutulur. Bu deðiþkenlere "parametre deðiþkeni"
+	yada kýsaca "parametre" denir.
+
+	Fonksiyonun kendisi çaðýran koda deðer-deðerler iletmesini saðlayacak 3 tane yöntem vardýr. 
+
+		1.	Return value (mechanism)
+		2.	Call By Reference	  -	(Ey çaðýran - sen bana bir deðiþkenin adresini gönder ben sana ileteceðim deðeri o deðiþkene yazayým)
+		3.	Global deðiþken(ler) 
+
+												Fonksiyon Tanýmlama Sentaksý
+
+	Fonksiyon geri dönüþ deðerine sahipse o deðerin bir türü olmalý. (int, double etc.), Bir fonksiyon geri dönüþ deðerine sahip olmak zorunda deðildir.
+Geri dönüþ deðeri olmayan fonksiyonlarýn türü "void" olarak belirtilir. Bir fonksiyonun void function olmasý kendisini çaðýran koda bir deðer göndermediði
+anlamýna gelmez. Void function geri dönüþ deðeri mekanizmasýný kullanmaz. Ancak diðer iki yöntemle kendisini çaðýran koda deðer gönderebilir.
+
+
+		
+		Fonksiyonun geri dönüþ deðeri türü		Fonksiyon Adý		Parametre Listesi
+			(int, double, char, void etc.)		(geçerli bir isim)	(Parametre türü ve isimleri)
+				{
+					Fonksiyonun gerçekleþtireceði iþlemler
+					return ifadesi (eðer varsa)
+				}
+
+	Örneðin:
+
+	int func(int x)
+{
+	// code
+}
+
+	Örneðin:
+
+double get_circle_area(double radius)
+{
+	// code
+}
+
+		Void bir keyword'dür ve void aslýnda bir türdür. Ama bir deðiþkenin türü void olamaz. Ancak bir ifadenin türü void olabilir.
+
+		Void türden bir ifadenin deðeri olamaz. Yani void türden bir ifadenin deðeri yoktur. Bu nedenle void türden bir deðiþken tanýmlanamaz.
+
+		NOT:	C dilinin C99 standardýndan önce (C89)' de implicit int kuralý vardý. Aslýnda bu kural C99 ile kaldýrýlmýþ olsa da derleyicilerin çok büyük 
+	 çoðunluðu eskiden yazýlan kodlarýn geçerliliðini korumak için bu kuralý desteklemeye devam etmektedirler.
+		NOT:	C++ dilinde ise implicit int kuralý yoktur ve hiçbir zamanda olmamýþtýr.
+	
+		NOT:	Bir fonksiyonun parametre deðiþkeni olmak zorunda deðildir. 
+	örneðin:
+
+		NOT:    func(int x) == int func(int x) ayný anlamda olur. Ama biz gene de asla implicit int kuralýný kullanmayacaðýz.
+
+		Fonksiyonun geri dönüþ deðeri olmadýðýný belirtmek için void türünü kullanýyoruz.
+
+	Örneðin:	
+	
+		void func(int x)
+		{
+		// code
+		}
+
+
+		NOT:
+
+		// block scope (Parametre deðiþkenleri block scope'tur.)
+		void foo(int x, int y, int z)
+		{
+		// x,y,z  isimlerinin scope'u burada sonlanýr.
+		}
+
+
+		ÇOK ÖNEMLÝ:
+
+		int x = 19;
+
+		int main(void)
+		{
+			int x = x;
+
+			// kesinlikle undified behavior (tanýmsýz davranýþ): int x bildirilen isim 'x' ifade yyani initializing expression derleyici bu x ismini
+			aradýðýnda bildirin x isminin scope'u içindedir ve kendi indeterminid value'su ile initialize edilmeye çalýþýlýr. Bu da tanýmsýz davranýþa yol açar.
+		}
+
+	NOT:	Fonksiyonlarýn parametre deðiþkenleri automatic ömürlü olmak zorundadýr. Global deðiþkenleri ise static ömürlüdür.
+	NOT:	C ve C++ dillerinde fonksiyonlarýn içerisinde fonksiyon tanýmlanamaz. Ancak C++'da lambda fonksiyonlarý vardýr.
+
+
+		Fonksiyonlar
+-----------	-------------
+
+ // 2 Tam Sayiyi toplamlarýný geri döndüren program
+
+int sum(int x, int y)
+{
+	return x + y; // kodu sadece 1 satýr olan ve tipik olarak tek bir return statement'a sahip olan böyle fonksiyonlara "one liner" denir.
+}
+
+// max2 adýnda kendisine gönderilen 2 tam sayýdan büyük olanýnýn deðerini döndürsün
+
+int max2(int x, int y)
+{
+	if (x > y)
+		return x;
+	return y;
+
+}
+
+
+// max2 adýnda kendisine gönderilen 2 tam sayýdan büyük olanýnýn deðerini döndürsün
+
+
+int max2(int x, int y)
+{
+	return x > y ? x : y;
+
+}
+
+
+// 3 Sayýdan en büyüðünü yazan program
+
+int max3(int x, int y, int z)
+{
+	int max = x;
+	if (y > max)
+		max = y;
+	if (z > max)
+		max = z;
+	return max;
+}
+
+
+int main(void)
+{
+	int x, y, z;
+	printf("3 Tam Sayi Giriniz: \n");
+	(void)scanf("%d%d%d", &x, &y, &z);
+	printf("En Buyuk : %d \n", max3(x, y, z));
+
+}
+
+
+// pure function : Sadece bir deðer hesaplamaya yönelik programm state'de bir deðiþikliðe neden olmayan fonksiyonlara pure function denir.
+
+int get_abs(int x)
+{
+	if (x > 0)
+		return x;
+	else
+		return -x;
+
+}
+
+// Girilen tam sayinin kaç basamakli olduðunu gösteren program
+
+int ndigit(int x)
+{
+	if (x == 0)
+		return 1;
+	int digit_count = 0;
+	while (x != 0) {
+		++digit_count;
+		x /= 10;
+	}
+	return digit_count;
+}
+
+int foo(int x, int y)
+{
+	x++;
+	y--;
+
+	x += y;
+	return x;
+	return y;
+
+}
+
+// NOT: Burada "return y" ifadesinin yürütülme olasýlýðý hiçbir þekilde yok. Bu tarz durumlar için  C dilinde kullanýlan terim unrechable code(eriþilemez kod) denir. 
+
+
+
+
+																	Fonksiyonlarýn Geri Dönüþ Deðeri Ne Olabilir ? 
+
+
+Kullanýldýðý yere göre return deðeri deðiþir. (Yani return 1'in standard bir anlamý yok)
+
+Fonksiyonlarý geri dönüþ deðerlerine göre kategorize edeceðiz;
+
+		1.	Bazý fonksiyonlarýn geri dönüþ deðeri zaten varlýk nedenidir. Yani hesaplanacak deðerdir. (Fonksiyonun var oluþ nedeni bir deðeri hesaplamaya yönelikse fonksiyonun geri dönüþ deðeri
+		hesaplanan deðerdir ve çok büyük çoðunlukla bu yöndedir.)
+		
+		2.	Fonksiyona bir soru sormak için yazýlan fonksiyonlar vardýr bunlarda genelde "evet" yada "hayýr"dýr. Bu tarz fonksiyonlara genel olarak test fonksiyonu / query function / predicate(C++) 
+		denir. Programlama dillerinde böyle fonksiyonlarý geri dönüþ deðeri türü "bool" türünde olur. Mesela C++ dilinde asal sayý test fonksiyonu yazýlsaydý; fonksiyonun ismi 'isprime' ve dönüþ deðeri
+		türü C++'da boolen tür olduðu için kesinlike "Bool" olacaktýr. Ancak C dilinde C99 dilinde _Bool türü eklenmiþ olsa da boolen döndüren fonksiyonlar "int" türü geri dönüþ deðeri seçilir. 1/0 gibi.
+		
+		NOT: zero / non- zero (sýfýr yada sýfýr dýþý deðer)
+
+		Örneðin;
+
+			Test fonksiyonlarý geleneksel olarak "int" deðer döndürür. Eðer 0'dan farklý bir deðer döndürüyorsa (0 olmayan hangi deðer olursa olsun) "TRUE" anlamýndadýr. Sadece geri dönüþ deðeri "0" ise 
+		"FALSE" anlamýnda olacakatýr.
+		3. Bazý fonksiyonlar iþ yapmakla yükümlü fakat baþarýlý olma garantisi yok. Çaðýran kod baþarý yada baþarýsýzlýk sonucunu bilmeli;
+		
+		Std. Library birçok durumunda;
+
+		Baþarýlý olmasý durumunda fonksiyon hangi deðeri döndürecek  ? --> 0 döndürmesi baþarýlý
+		Baþarýsýz olmasý durumunda fonksiyon hangi deðeri döndürecek ? --> non-zero döndürmesi baþarýsýzlýk
+
+		NOT:	3. Parti kütüphanelerde negatif deðerlerin baþarýsýzlýk olarak döndürülmesi görülebilir.
+
+		Baþarý bilgisi geri dönüþ deðeri ile iletilir.
+
+		4.	Çaðýran kod geri dönüþ deðerini kullanýp kullanmama hakkýna sahip, fonksiyonun geri döndürdüðü deðer varlýk nedeni deðil tamamlayýcý bir deðer.
+
+		NOT:	To discard the return value of a function (Geri dönüþ deðerini kullanmamak için ingilizcede kullanýlan deyim discard etmek.)
+				
+				Tek varlýk nedeni bir deðeri hesaplayamaya yönelik olan bir fonksiyonu çaðýran bir kodun fonksiyonun geri dönüþ deðerini kullanmamak "LOGIC" bir hatadýr.
+
+		Genel anlamda fonksiyonlarýn 5 kullaným tipi vardýr;
+
+				1.	Geri dönüþ deðeri varlýk nedeni olan fonksiyonlar (pure function)
+				2.	Test fonksiyonlarý
+				3.	Ýþ yapan ve iþin baþarýlý olup olmadýðýný kontrol eden fonksiyonlar
+				4.	Geri dönüþ deðeri tamamlayýcý bilgi olan fonksiyonlar.
+				5.	Geri dönüþ deðeri olmayan fonksiyonlar (void function)
+		
+
+		NOT:	C dilinde, baþka proglramlama dillerinde olan nested function yapýsý yoktur. Yani bir fonksiyon içerisinde baþka bir fonksiyon tanýmlanamaz.
+
+
+		void func (void)
+		{
+			void foo(void)
+			{
+
+			}
+		}
+
+
+		DÝKKAT:	BÖYLE BÝR SENTAKS YAPISI C DÝLÝNDE YOKTUR.
+
+		 
+
+
+

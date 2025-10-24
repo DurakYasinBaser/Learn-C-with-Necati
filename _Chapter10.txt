@@ -1,0 +1,365 @@
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+																			OPERATOR'S
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Operatörlerin üstünde iþlem yaptýðý ifadelere operatorun 'operandlarý' denir.
+
+a + b (a ve b) toplama operatorunun operandlarý
+
+Bazý operatorler;
+
+Bazý operatorlerin;
+
+tek operanda sahip(Unary);
+iki operanda sahip(Binary);
+üç operandla sahip(Ternary);
+
+Bazý operatorler;
+
+ön-ek konumunda   (prefix)  Örneðin; +++x; ()
+son-ek konumundax (postfix) Örneðin; x--
+ara-ek konumunda  (infix)   Örneðin; a > b 
+
++x --> Expression 
+a > b --> Expression
+
+Operatorlerin olusturduðu ifadelerin birer deðeri vardýr. Bunlara generate, return gibi ifadelerle ifade edilir. 
+
+Side Effect: Programda durumsal bir deðiþimin olmasý demek.
+
+Bazý operatorler birden fazla þekilde karsýmýza çýkabilir örneðin;
+
+* (asterisk) : 
+------------------------------
+* ptr;	(dereferencign)
+x * y;  (multiplication)
+
++x		(sign operator +)
+a + b		(addition op)
+
+-		(sign operator -)
+x - y	(subtraction op)
+
+
+&x		(address of op)
+x & y	(bitwise and op)
+
+
+Aritmetik Operatorler
+---------------------
+++ --
++ -
+* / %
+
+											Comparison Operators
+-------------------------------------------------------------------------------------------------------
+
+Relational Operators
+--------------------
+> >= < <=
+
+Equality Operators
+--------------------
+== !=
+
+Logical Operators
+--------------------
+! && ||
+
+
+
+Assignment Operators
+--------------------
+`=` `+=` `-=` `*=` `/=` `%=` `<<=` `>>=` `&=` `^=` `\|=`
+
+comma operators
+,
+-------------------
+pointer (adreslerle)
+--------------------
+& * [] ->
+
+bitwise operators
+(bitsel operatorler)
+--------------------
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+																		+ Additions operators
+																		- Subtraction operator
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	4. Oncelik seviyesindedir.
+	binary infix operatorler (iki operand alan ara ek konumunda)
+	side effect yok
+
+int main(void)
+{
+	int x, y;
+	printf("iki tam sayi giriniz:\n");
+	(void)scanf("%d%d", &x, &y);
+	printf("%d + %d = %d\n", x, y, x + y);
+	printf("%d - %d = %d\n", x, y, x - y);
+
+} 
+
+
+	ÇOK ÖNEMLÝ: ÝÞARETLÝ TAM SAYILARDA TAÞMA(OVERFLOW) UB'DÝR !!!
+
+	IDIOMS: unsigned int x = -1; // Bu declaration C'de bir idiomdur. Anlamý, alabileceði en büyük sayý yüklenmiþtir bu deðiþkene. Örneðin;
+
+	int main(void)
+{
+	unsigned int x = -1;
+	printf("X = %u", x);
+}
+
+OUTPUT: 4294967295 (4 Byte int iþaretsiz tam sayý sýnýr deðeri)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+																		+ Signed operator plus
+																		- sign operator minus
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	2. Öncelik Seviyesindedir.
+	Unary prefix operatorler
+	
+		+x			--->		 Ürettiði deðer kendi deðeridir.
+		-x			--->		 Ürettiði deðer '0 - x '
+	
+	C dilinde bu ifadeler R Value'dur.
+
+	
+	int 
+								RANK
+	_Bool					(int altý tür)
+	short					(int altý tür)
+	unsigned short			(int altý tür)
+	char					(int altý tür)
+	signed char				(int altý tür)
+	unsigned char			(int altý tür)
+
+	NOT:	Bu türler int türünden daha küçük türler. int'ten daha küçük rank teki türlerden ifadeler bir operatorun operandý oldugunda ortulu olarak int türüne dönüþtürülüyorlar.
+	Bu tür dönüþümlere 'integral promotion' denir.
+
+	Örneðin;
+
+	int main(void)
+	{	
+		char c1 = 8;    // türü char 
+		char c2 = 12
+
+		c1 + c2 // bu ifadenin türü int'tir. Çünkü addition operatorunun operandý oldugu için int türüne yükseltildi(integral promotion).
+
+	}
+
+	Ýþaret operatoru +'nýn bilerek istenerek kullanýlmasýný saðlayan 2 durum olabilir.
+			
+			1. Integral Promotion olarak kullanmak
+			2. L value olan ifadeyi R value olarak kullanmak.
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+															'*'		'/'		'%' (Multiplicative Operators) 			
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	Bu operatorler binary operatordur.
+	
+	Binary infix operatordür.
+	
+	Side effect yoktur.
+	
+	Hepsi 3. öncelik seviyesindedir. Soldan saða öncelik yönündedir.
+	
+	Türsel kýsýtlama vardýr. '*' ve '/' operatorleri için yoktur ama '%' operatorunun operandý gercek sayý turunden olamaz. Örneðin;
+	
+	Çarpma operatorunun ürettiði deðer operandlarýn çarpýmý
+
+	Bolme operatorunun ürettiði deðer sol operandýn sað operanda bolumunden elde edilen deger.
+	
+	Mod operatorunun ürettiði deðer sol operandýn sað operanda bolumunden kalan deger.
+
+	NOT: Çarpma operatoru, toplama operatorunde oldugu gibi isaretli tam sayý türlerinde islem yapýldýðýnda tasma durumu (overflow) UB'dir
+
+	NOT: Bölme operatoru, operandlar tam sayý türündense bölme yine tam sayý türünde yapýlýr.
+
+	NOT: Tam sayýlý bölme iþleminde, bölme operatorunun, sað operandýnun '0' olmasý kesinlikte UB(tanýmsýz davranýþtýr).
+	
+	NOT: Mod iþleminde, mod operatorunun, sað operandýnun '0' olmasý kesinlikte UB(tanýmsýz davranýþtýr).
+
+Örnek;
+
+int main(void)
+{
+	int x, y;
+	printf("Iki Tam Sayi Girin:\n");
+	(void)scanf("%d%d", &x, &y);
+
+	printf("%d * %d = %d\n", x, y, x * y);	// x ve y nin deðerine göre overflow UB olabilir.
+	printf("%d / %d = %d\n", x, y, x / y);  // y'nin 0 olmasý durumunda UB olabilir, ve bu iþlemin gerçek sayý üretmesi söz konusu deðildir.
+	printf("%d %% %d = %d\n", x, y, x % y);	// y'nin 0 olmasý durumunda UB olabilir.
+}
+
+Örnek;
+
+int main(void)
+{
+	int x;
+
+	// ..
+	if (x % 2 == 0) { // x eðer çift ise
+
+	}
+}
+
+Örnek;
+
+int main(void)
+{
+	int x;
+
+	// ..
+	if (x % 3 == 0) { // x 3'e tam bölünüyorsa
+
+	}
+}
+
+Örnek;
+
+int main(void)
+{
+	int hour;
+	int n;
+	printf("Saat Kac:\n");
+	(void)scanf("%d", &hour);
+	printf("Kaç Saat Sonra:\n");
+
+	(void)scanf("%d", &n);
+	printf("Saat %d ve %d Saat Sonra, Saat %d olacaktýr.", hour, n, (hour + n) % 12);
+}
+
+Örnek;
+
+int main(void)
+{
+	int x;
+
+	printf("4 Basamakli Bir Sayi Giriniz:\n");
+	(void)scanf("%d", &x);
+
+	printf("%d Sayisinin Binler Basamagi %d\n", x, x / 1000);
+} 
+
+Örnek;
+
+int main(void)
+{
+	int x;
+
+	printf("4 Basamakli Bir Sayi Giriniz:\n");
+	(void)scanf("%d", &x);
+
+	printf("%d Sayisinin Binler Basamagi %d\n", x, x / 1000);
+	printf("%d Sayisinin Yuzler Basamagi %d\n", x, x / 100 % 10);
+	printf("%d Sayisinin Onlar  Basamagi %d\n", x, x % 1000 % 100 /10);
+	printf("%d Sayisinin Birler Basamagi %d\n", x, x % 10);
+}
+
+NOT: BU ÝFADELERÝN BÖYLE OLMASI STD GEREGI GARANTI ALTINDA, TUM PROGRAMLAMA DILLERINDE AYNI DEGIL ! 
+int main(void)
+{
+	printf("%d\n", 5 % -2);		//		1			// pos
+	printf("%d\n", -5 % 2);		//	   -1			// neg	
+	printf("%d\n", -5 % -2);	//	   -1			// neg
+}
+
+Örnek;
+
+int main(void)
+{
+	printf("Dort Basamakli Bir Tam Sayi Giriniz:\n");
+	int x;
+	(void)scanf("%d", &x);
+
+	printf("%d Sayisinin Basamaksal Tersi %d", x, (x / 1000 * 1) + (x % 1000 / 100 * 10) + (x % 100 / 10 * 100) + (x % 10 * 1000));
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+															++	--> Ýncrement Operators (plus plus)
+															--  --> Decrement Operators (minus minus)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	-Unary Operators
+	
+	-Ýki operator degil de dört tane operator varmýþ gibi düþünülmeli;
+	
+		prefix  (Ön-ek)   increment			++x
+		postfix (Son-ek)  increment			x++
+	
+		prefix  decrement					--x
+		postfix decrement					x--
+
+	NOT:	Increment ve decrement operatorlerinin operandý olan ifadeler L Value olmak zorundadýr. Sentaks hatasýdýr.
+
+		Örneðin;
+
+		int main(void)
+		{
+			int x = 5;
+
+			++(x + 3);		// Sentaks hatasý
+		}
+
+		Örnek;
+
+		++5; --> Geçersiz
+
+	- Side effect kesinlikle vardýr.
+
+			++x --> Ýfadesinde, operatörün ürettiði deðer nesnenin deðerinin bir fazlasý
+			--x --> Ýfadesinde, operatörün ürettiði deðer nesnenin deðerinin bir eksiði
+
+			x++ --> Ýfadesinde, operatörün ürettiði deðer nesnenin deðerinin kendi deðeridir.
+			x-- --> Ýfadesinde, operatörün ürettiði deðer nesnenin deðerinin kendi deðeridir.
+
+
+
+			3 Saat 01 Dakika 10. Saniyede kaldým.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Örnek;
+
+int main(void)
+{
+	int x = 9;
+	int y = 9;
+	
+	if (x++ > y) {
+		printf("Dogru\n");
+	}
+	else
+		printf("Yanlis\n");
+}
+
+OUTPUT: YANLIS
+
+int main(void)
+{
+	int x = 9;
+	int y = 9;
+	
+	if (++x > y) {
+		printf("Basari\n");
+	}
+	else
+		printf("Basarisiz\n");
+}
+
+OUTPUT: YANLIS
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+IDIOMS:
+
+x = y;
+y = y + 1;     ile  x = y++; Ayný anlamdadýr.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+

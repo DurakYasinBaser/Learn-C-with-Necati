@@ -1,0 +1,646 @@
+﻿--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+																				Comparison Operator's
+
+																		 '<' '<=' '>' '>=' (Relational Operators)
+																			'=='  '!='	   (Equality Operators)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<		(Less than)
+<=		(Less or equal)
+>		(Greater than)
+>		(Greater or equal)
+
+==		(Equal (to))
+!=		(Not equal)
+
+	*Relational operators 6. öncelik seviyesinde
+	*Equality Operators   7. öncelik seviyesinde
+	*Binary infix operators
+
+	Örneğin;
+
+	a < b
+	x == y
+
+	*Side effect yok.
+	*Bir çok dilde karşılaştırma operatorlerinin ürettiği değer 'Bool' türdendir. Fakat C dilinde karşılaştırma operatorleri ve (Lojik operatorler) ürettiği değer "int" türdendir.
+		Yani bu operatorler ile oluşturulan bir expression'ın türü int türdür.
+
+
+	Örnek;
+
+	a > b	Türü bool, değeri True/False (C++)
+
+	a > b   türü int, değeri 1/0 (Eğer önerme doğru ise "1", önerme yanlış ise "0")
+
+		NOT: C dilinde üretilen int değer (1 yada 0) bazı idiyomatik yapılarda kullanılıyor.
+
+	Örnek;
+
+int main(void)
+{
+	int x, y;
+
+	printf("Iki Sayi Giriniz:\n");
+	(void)scanf("%d%d", &x, &y);
+
+	printf("%d <  %d = %d\n", x, y, x <  y);
+	printf("%d <= %d = %d\n", x, y, x <= y);
+	printf("%d >  %d = %d\n", x, y, x >  y);
+	printf("%d >= %d = %d\n", x, y, x >= y);
+	printf("%d == %d = %d\n", x, y, x == y);
+	printf("%d != %d = %d\n", x, y, x != y);
+
+}
+
+	**NOT: Yeni başlayanların tipik yaptığı kodlama hatalarının bir kısmı matematiksel notasyon ile benzerlik kurmaya yöneliktir.
+	
+	Örnek;
+
+	Matematiksel Notasyon							C dilinde
+	
+	a * b + c					 =>					(a * b) + c
+
+	ab / 2a						 =>					((a * b) / 2) * a olacaktır.
+
+	-b / 2a						 =>					-b /  (2 * a)
+
+	10 < x < 20					 =>					if (10 < x < 20)			// always True olacaktır. Hata
+													if (x > 10 && x < 20)		// Doğrusu bu yönde olmalı.
+
+    Örnek;
+
+int main(void)
+{
+	int x, y, z, t;
+	printf("4 Tam Sayi Girin:\n");
+	(void)scanf("%d%d%d%d", &x, &y, &z, &t);
+
+	int pos_count = 0;
+	if (x > 0) ++pos_count;
+	if (y > 0) ++pos_count;
+	if (z > 0) ++pos_count;
+	if (t > 0) ++pos_count;
+	printf("Girilen Dort Sayinin %d Tanesi Positive\n", pos_count);
+
+}
+
+Örnek;
+
+int main(void)
+{
+	int x, y, z, t;
+	printf("4 Tam Sayi Girin:\n");
+	(void)scanf("%d%d%d%d", &x, &y, &z, &t);
+
+	int pos_count = (x > 0) + (y > 0) + (z > 0) + (t > 0);
+
+	printf("Girilen Dort Sayinin %d Tanesi Positive\n ", pos_count);
+
+}
+		**NOT: Yukarıdaki iki kodda aynı işi yapmaktadır.
+		
+		**NOT: C dilinde, türü void olan expression's dışında tüm expression'ların bir değeri vardır.
+
+		**NOT: C ve C++ dillerinde atama operatörleri ile oluşturulan ifadelerin değeri nesneye atanan değerdir.
+
+		DIKKAT:
+
+int main(void)
+{
+	int x;
+	printf("Bir tam sayi girin:");
+	(void)scanf("%d", &x);
+
+	if (x = 5)								// *Always Ture
+		printf("Evet Dogru\n");
+	else
+		printf("Hayir Yanlis\n");
+}
+
+
+int main(void)
+{
+	int x;
+	printf("Bir tam sayi girin:");
+	(void)scanf("%d", &x);
+
+	if (x == 5)								// *Olması gereken kod 
+		printf("Evet Dogru\n");
+	else
+		printf("Hayir Yanlis\n");
+}
+
+	** "=" operatoru ile "==" operatorünün karıştırılması tipik bir hatadır ve dikkat edilmelidir. Burada sentaks hatası olusmayacağı için yanlış koda neden olabilir.
+
+	NOT:	 x == y doğru ise, y == x' de doğrudur. O zaman x == 4 yazmak yerine 4 == x yazsam kodun anlamında bir değişiklik olmaz. Birçok C programcısı ;
+
+
+		Örnek;
+
+int main(void)
+{
+	int x;
+	printf("Bir tam sayi girin:");
+	(void)scanf("%d", &x);
+
+	if (4 == x )							// * Şeklinde yazarsak karışıklığın önüne geçeriz. "5 = x" sentaks hatasıdır. Çünkü atama operatorünün sol operandı L value olmak zorunda. 
+		printf("Evet Dogru\n");
+	else
+		printf("Hayir Yanlis\n");
+}	
+
+
+	**NOT: Gerçek sayıların eşitlik karşılaştırması yapmak tipik yapılan hatalardan birisidir.
+
+	ÖDEV:	IEEE 754 formatına çalış.
+
+
+	**NOT: Maximal munch kuralı (C/C++/C#/ JAVA gibi dillerde ortak bir kural). En büyük lokma kuralı diye türkçeleştirebiliriz.
+		   Derleyicinin ilk yaptığı işlem lexical analisys(tokenizing) derleyici bu durumda dilin kuralları geregi maksimum uzunluktaki token'ı elde etmeye çalışacak.
+
+int main(void)
+{
+	int x = 5;
+	int y = 8;
+
+	int z = x++ + y;
+
+	printf("X = %d\n", x);	// 6
+	printf("Y = %d\n", y);	// 8
+	printf("Z = %d\n", z);	// 13
+
+}
+
+Lexical Analysis (Tokenizing) Örneği;
+
+int z = x+++y;
+
+int
+z
+=
+x
+++
++
+y
+;
+
+Yukarıdaki gibi tokenizing gerçekleşiyor.
+
+NOT: Tokenizing aşamasında herhangi bir sentaks kontrolü yapılmıyor
+
+
+Örnek;
+
+sum>>=++x; gibi bir expression olsaydı;
+
+sum
+>>=
+++
+x
+;
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+																			LOGIC OPERATOR'S
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+!				Logical Not (lojik değil Operatorü)				2.  Öncelik Seviyesinde			Unary  Operators
+&&				Logical And (Lojik VE    Operatoru)				11. Öncelik Seviyesinde			Binary Operators
+||				Logical Or  (Lojik VEYA  Operatoru)				12. Öncelik Seviyesinde			Binary Operators
+
+
+🧭 Matematiksel olarak mantıksal durumlar aşağıdaki şekilde gösterilmektedir;
+
+| Önerme(p) |         |        |
+|:---------:|:-------:|:------:|
+| Önerme(p) |  doğru  | yanlış |
+| Değil p   |  Yanlış | Doğru  |
+
+
+|p          |q        |p ve q  |
+|:---------:|:-------:|:------:|
+|Doğru      |Doğru    |Doğru   |
+|Doğru      |Yanlis   |Yanlis  |
+|Yanlis     |Doğru    |Yanlis  |
+|Yanlis     |Yanlis   |Yanlis  |
+
+
+| p         | q        |p veya q  |
+|:---------:|:--------:|:--------:|
+| Doğru     | Doğru    | Doğru    |
+| Doğru     | Yanlis   | Doğru    |
+| Yanlis    | Doğru    | Doğru    |
+| Yanlis    | Yanlis   | Y        |
+
+
+| p         | q       | p özel veya(exclusive or - exor) q |
+|:---------:|:-------:|:----------------------------------:|
+| Doğru     | Doğru   |				Yanlis                 |
+| Doğru     | Yanlis  |				Doğru                  |
+| Yanlis    | Doğru   |				Doğru                  |
+| Yanlis    | Yanlis  |				Yanlis                 |
+
+		**DIKKAT : C dilinde lojik operatorlerin operandları herhangi bir türden(tam sayı - gerçek sayı - pointer) olabilir. 
+
+		**NOT	 : C dilinde aşağıdaki listedeki bütün yerlerde aslında lojik bir değer beklenir. Fakat dilin kurallarına göre bu yerlerde herhangi bir türden ifade kullanılabilir.
+
+				   Zero / Non-Zero
+
+				   All non-zero values --> True (Doğru)   olarak
+					   "0" value       --> False (Yanlis) olarak
+					  
+		**
+					1. !expression															// Expression yazılan her yerde lojik yorumlama yapılıyor.
+					2. expression 1 && Expression 2
+					3. expression 1 || Expression 2
+					5. if(expression)
+					6. While(expression)
+					7. do {} while (expression)
+					8. for (; expression ; expression)
+					9. expression ? op2 : op 2												// Lojik operatörler, relational operatorler gibi 'int' türden değer üretirler.
+
+
+
+---------------------------------------------------------
+		'!'		Logical Not (lojik değil Operatorü)	
+---------------------------------------------------------
+2.  Öncelik Seviyesinde	 |	Öncelik Yönü Sağdan Sola'dır.	| Unary  Prefix Operators
+
+!expression --> ! operatorunun operandı hangi türden olursa olsun, genel ifadenin türü "int"tir (1 - 0).
+
+Örnek;
+
+int main(void)
+{
+	int x;
+	printf("Bir tam sayi girin: ");
+	(void)scanf("%d", &x);
+
+	printf("!%d = %d", x, !x);
+}
+
+Örnek;
+
+int main(void)
+{
+	int x;
+	printf("Bir tam sayi girin: ");
+	(void)scanf("%d", &x);
+
+	printf("!!%d = %d", x, !!x);
+}
+
+	**NOT: Bir ifadenin değilinin değili; non-zero ifadeler için "1" zero ifadeler için "0"dır.
+	
+	**DIKKAT: C'de logic XOR operatoru olsaydı, onun da ürettiği değer "int"(1-0) olurdu. Mülakatlarda en sık sorulan sorulardan birisi, öyle bir ifade yazmak istiyoruz ki o ifadenin değeri
+	logic EXOR operatorunun olsaydı ürettiği değer olsun;
+
+	***C Dilinde EXOR kapısı yapmanın yollarından birisi;
+
+
+int main(void)
+{
+	int x,y;
+	printf("Iki  tam sayi girin: ");
+	(void)scanf("%d%d", &x,&y);
+
+	printf("%d EXOR %d = %d",x,y,!!x != !!y);
+}
+		
+
+---------------------------------------------------------
+		'&&'		Logical AND (lojik VE Operatorü)	
+---------------------------------------------------------
+
+	Operandlarının lojik yorumlanmasını sağlar ve int türden 1 yada 0 değerini üretiyor.
+
+	Binary infix operator.
+
+	exp1 && exp2
+
+Örnek;
+
+int main(void)
+{
+	int x, y;
+	printf("Iki Tam Sayi Girin: ");
+	(void)scanf("%d%d", &x, &y);
+
+	printf("%d && %d = %d", x, y, x && y);
+
+}
+
+
+		**NOT:	TİPİK YAPILAN HATALAR;
+
+				1.	İki ayrı operatörün birbirine benzerliği;
+					
+					&& Logical AND
+					&  Bitwise AND
+
+					x && y --> Lojik AND'in operandları
+															!! Dikkat böyle bir kodlama yanlışı söz konusu olduğunda, tipik olarak (unit test iyi yapılmazsa) testten de geçecektir.
+					x & y  --> Bitsel AND Operandları
+
+
+---------------------------------------------------------
+		'||'		Logical OR (lojik VEYA Operatorü)	
+---------------------------------------------------------
+
+int main(void)
+{
+	int x, y;
+	printf("Iki Tam Sayi Girin: ");
+	(void)scanf("%d%d", &x, &y);
+
+	printf("%d || %d = %d", x, y, x || y);
+
+}
+
+	**NOT:	TİPİK YAPILAN HATALAR;
+
+				1.	İki ayrı operatörün birbirine benzerliği;
+					
+					|| Logical OR
+					|  Bitwise OR
+
+					x || y --> Lojik OR'in operandları
+															!! Dikkat böyle bir kodlama yanlışı söz konusu olduğunda, tipik olarak (unit test iyi yapılmazsa) testten de geçecektir.
+					x || y  --> Bitsel OR Operandları
+
+
+	**NOT: C ve C++'da bu karışıklıkların önüne geçmek için farklı yöntemler vardır.
+
+		   C++ için;
+
+		   && --> AND		& --> bitand
+		   || --> OR		| --> bitor
+
+		   C'de ise böyle anahtar sözcükler olmadığı için makrolardan faydalanmak bir yöntemdir.
+
+		   #define AND && yaparsam, önişlemci programım AND yazdığımda "&&" token'ınını görecek.
+
+				2. 'VE' operatörünü kullanmak yerine 'VE' Operatörünü kullanmak
+
+				NOT: Programlamaya yeni başlayan kişilerin, lojik 'VE' operatörünün kullanılması gereken bazı yerlerde yanlışlıkla lojik veya kullanılması.
+
+				Örnek;
+
+				X üçe ya da on yediye eşit değilse;
+
+				if(x != 3 || x != 17)	// alyaws true						if(x != 3 && x != 17) // Doğrusu böyle olmalıdır.
+
+-------------------------------------
+			DE MORGAN RULES
+-------------------------------------
+
+degil ( X ve Y) == değil (x) veya değil (y) 
+
+degil ( X veya Y) == değil (x) ve değil (y) 
+
+ÖRNEK;
+
+	if(x != 3 || x != 17)	// alyaws TURE demiştik, de morgan uygularsak bu ifadenin lojik değilini aldığımda da always FALSE olması gerekir değil mi ? 
+
+	if (!(x != 3)  && !(x != 17))	<==>  if ( x == 3 && x == 17)  Aynı X hem 3'e hemde 17'ye eşit olamaz.
+
+				**NOT:  a < b'nin değili a >= b ' dir.
+
+						!(a < b) == (a >= b)
+
+
+						Örnek;
+
+						// nec language
+		
+						// a < b sadece küçüktür operatorü ve logic operatorler var.
+						
+						int main(void)
+						{
+							int x, y;
+							printf("Iki Sayi Giriniz: \n");
+							(void)scanf("%d%d", &x, &y);
+						
+							printf("%d < %d = %d\n",  x, y,   x < y);
+							printf("%d > %d = %d\n",  x, y,   y < x);
+							printf("%d >= %d = %d\n", x, y,   !(x < y));
+							printf("%d <= %d = %d\n", x, y,   !(x > y));
+							printf("%d == %d = %d\n", x, y,   !(x < y) && !(y < x));
+							printf("%d != %d = %d\n", x, y,   (x > y) || (y > x));
+						
+						}
+
+					
+						
+						
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+															## Short Circuit Behavior(Kısa devre davranışı)  																	
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+❗ C ve C++ dillerinde "**Short circuit behavior(Kısa devre davranışı)**" davranışı sıkça kullanılmaktadır ve iyi anlaşılmış olması gerekiyor.
+
+❗ Ayrıca C dilinde bir çok **idiomatic** kullanımda **Short circuit behavior** kullanıldığı için çok iyi bilinmek zorundadır. Bu özellik C#/Java gibi dillerde de mevcuttur.
+
+
+❗ `&&` ve `||` operatörlerinin diğer operatörlerden önemli bir farkı olan "**Short circuit behavior(Kısa devre davranışı)**" davranışı vardır, bu davranışta işleme giren operandlardan 
+ilk önce sol tarafta kalanı yapılır ve oluşan sonuca göre sağ tarafta başka kodlar varsa bu kodların çalıştırılıp çalıştırılmayacağına karar verilir. 
+
+❗ "**Short circuit behavior(Kısa devre davranışı)**" özelliği C dilinin standardının bir kuralıdır, yani tüm C derleyicileri bu kuralı uygulamaktadır.
+
+❗ `&&` ve `||` operatörlerinin "**Short circuit behavior(Kısa devre davranışı)**" davranışı vardır fakat `&` ve `|` operatörlerinin "**Short circuit behavior(Kısa devre kuralı)**" davranışı 
+yoktur!
+
+
+👇 Aşağıdaki programda "**Short circuit behavior(Kısa devre kuralı)**" davranışı incelenebilir.
+```C
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+
+int main(void)
+{
+    int x = 0;
+    int y = 5;
+    int z;
+    
+    z = x && ++y; // Bu satırda 'Short circuit behavior' vardır, '++y' kodu çalışmayacaktır.
+
+    printf("z = %d", z); // 'z = 0' yazar
+    printf("y = %d", y); // 'y = 5' yazar
+}
+```
+
+
+👇 Aşağıdaki 1. ve 2. durumdaki kodların davranışları aynıdır ve 2. durumdaki kodda "**Short circuit behavior(Kısa devre kuralı)**" davranışı vardır.
+```C
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+
+int main(void)
+{
+    // 1. kullanım
+    if(x > 5)
+        if(y < 3)
+        ++a;
+    
+    // 2. kullanım
+    if(x > 5 && y < 3)
+        ++a;
+}
+```
+
+
+
+👇 Aşağıdaki programda fonksiyon çağrılarında "**Short circuit behavior(Kısa devre kuralı)**" nasıl çalışıyor incelenebilir.
+```C
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+#include <stdio.h>
+
+int foo(void)
+{
+    printf("foo called!\n");
+    return 1;
+}
+
+int bar(void)
+{
+    printf("bar called!\n");
+    return 1;
+}
+
+int main(void)
+{
+    printf("foo() && bar(); = %d\n", foo() && bar());
+
+    printf("\n~~~~~~~~~~~~~~~~\n");
+
+    printf("!foo() && bar(); = %d\n", !foo() && bar());
+
+    printf("\n~~~~~~~~~~~~~~~~\n");
+
+    printf("foo() || bar(); = %d\n", foo() || bar());
+
+    printf("\n~~~~~~~~~~~~~~~~\n");
+
+    printf("!foo() || bar(); = %d\n", !foo() || bar());
+
+    return 0;
+}
+```
+
+
+
+👇 Aşağıdaki programda "**Short circuit behavior(Kısa devre kuralı)**" davranışı incelenebilir.
+```C
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+
+int main(void)
+{
+    int x = 0;
+    int y = 9;
+    
+    x && (y = 674); // Bu satırda 'Short circuit behavior' vardır, '(y = 674)' kodu çalışmayacaktır.
+
+    printf("x = %d", x); // 'x = 0' yazar
+    printf("y = %d", y); // 'y = 9' yazar
+}
+```
+
+
+
+👇 Aşağıdaki programda en basit idiomlardan birinin kullanımı incelenebilir. Bu programda **linear search** algoritmasına göre bir dizide bir elemanın olup olmadığı durumu incelenmektedir.
+- 1. ve 2. kullanımlar aynı sonucu üretecektir fakat 2. kullanım C dilinde idiomatic yapıdasır ve profestonel bir C programcısı 2. kullanımı tercih eder.
+```C
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+
+int main(void)
+{
+    int ary[100];
+    int key = 7;
+    
+    // linear search
+    int i;
+
+    // 1. kullanım
+    for(i = 0;i < 100; ++i)
+        if(ary[i] == key)
+        break;
+
+    // 2. kullanım, burada 'Short circuit behavior' kuralından fayfalanılıyor
+    for(i = 0; i < 100 && ary[i] != key; ++i)
+    ;
+
+    if(i < 100)
+        printf("evet bulundu, index = %d\n", i);
+    else
+        printf("hayir bulunamadi");
+}
+```
+
+
+
+👇 Aşağıdaki programda **short circuit behavior(kısa devre davranışı)** incelenebilir.
+```C
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+
+int main(void)
+{
+    int* ptr;
+
+    // some code here...
+
+    // Aşağıdaki if statement koşuşunda '&&' operatörü ile 'kısa devre davranışı' uygulanmaktadır, burada 'ptr' göstericisi 'NULL pointer' olduğunda ikinci kaşul çalışmayacaktır.
+    if(ptr != NULL && *ptr > 10){
+        // some code here...
+    }
+}
+```
+
+
+
+❔ Aşağıdaki program programlama dili ne olursa olsun mülakatlarda sorulan çok temel bir soru olan "Girilen üç sayıdan ortancasını bulan programı yazınız." sorusudur;
+- 👇 Aşağıdaki program girilen üç sayının ortancasını bulmak zor olabileceği için tek tek sayıların en büyük ya da en küçük sayı olma durumları için kural yazıp bunun değilini(de morgan) aldığımızda o yazının ortanca olma durumunu tespit ederiz. 
+```C
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+
+// Kendisine argüman olarak verilen sayılardan ortanca olan sayıyı dönen foksiyon
+int getmid(int x, int y, int z)
+{
+    // '(x > y && x > z)' ifadesi 'x' en büyük sayı mı sorgulaması
+    // '(x < y && x < z)' ifadesi 'x' en küçük sayı mı sorgulaması
+    // Yukarıda açıklanan iki ifadenin veya ile birleştirilmesinden oluşan ifade de 'x'in ortanca olmama durumunun mantıksal gösterimidir.
+    // Yukarıda açıklanan iki ifadenin değilinin alındığı durumdaki ifade ise 'x'in ortanca sayı olma durumunu gösterecektir.
+    if( !((x > y && x > z) || (x < y && x < z)) )
+        return x;
+
+    if( !((y > x && y > z) || (y < x && y < z)) )
+        return y;
+
+    return z;
+}
+
+int main(void)
+{
+    int x, y, z;
+
+    printf("ortanca sayiyi bulmak için uc tane tam sayi giriniz:");
+    scanf("%d%d%d", &x, &y, &z);
+
+    printf("girilen sayilar: %d, %d %d ve ortaca sayi %d.\n", x, y, z, getmid(x, y, z));
+
+    return 0;
+}
+
+

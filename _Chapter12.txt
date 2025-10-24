@@ -1,0 +1,565 @@
+﻿---------------------------------------------
+Sequence Poınt Olusturan Operatorler																		
+---------------------------------------------
+
+►	&& Logic AND
+►	|| Logic OR
+►	Comma Operator
+►	Ternary Operator
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+																			Assigment Operators(Atama Operatorleri)
+																	
+																							`=` 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+►	Tüm assigment operatorlerinin side effect'i vardır.
+
+►	Binary infix operatorlerdir.
+
+►	Comma operator hariç en düşük öncelik seviyesinde
+
+►	Right Associativity (Sağdan sola öncelikli)
+
+Örnek;
+
+1.	a = b = c = x;
+
+2.	a = b = (c = x);
+
+3.	a = (b = (c = x));
+
+♠ int x = 12 // declaration statement
+
+♠ x = 6; // Assigment.
+
+	NOT:	
+		♦ C dilinde tüm operatörlerin ürettiği bir değer vardır. Atama operatörleride bir değer üretir. Çoğunlukla atama operatörlerinin ürettiği değer discard edilir. Fakat birçok C idiyomu 
+atama operatörlerinin ürettiği değeri kullanır.
+
+
+	NOT:
+		► Atama operatörü ile oluşturulan ifadelerde, operandların aynı türden olması sentaks açısından bir zorunluluk değildir. Ama farklı türden operandlar söz konusu olduğunda,
+		dilin birazda karmaşık diyebileceğim kurallara bağlıdır.
+
+
+► Atama operatörünün ürettiği değer nesneye atanan değerdir. (Atama operatörünün değeri sağ operandın değeridir söylemi çok yanlış bir söylemdir.)
+
+	Örneğin;
+
+	int x = 12;
+	int y = 89;
+
+	double dval = 4.52564654;
+
+	// ...
+
+	x = dval; 
+
+	//	Eğer atama operatörünün ürettiği değer sağ operandın değeri olsaydı x değişkenine atanan değerin 4.5256... olması gerekirdir. Fakat x değişkeni int türden olduğu için x'e atanan değer dval
+	'in değeri değil dval'in tam sayı değeri olacaktır. Bu sebeple atamam operatörünün ürettiği değer sağ operandın değeri değil, nesneye atanan değerdir.
+
+		■ Atama operatörünün ürettiği değer çok önemlidir ve C idiyomlarında çokça kullanılır.
+
+Örneğin;
+
+int main(void)
+{
+	int x;
+	//
+
+	x = foo();
+	if (x == -1) {				// 1. Kod
+		// some code here
+		// ..
+	}
+
+	if ((x = foo()) == -1) {   // 2. Kod 
+		// some code here
+	}
+
+}
+
+AÇIKLAMA: 1.Kod ve 2.Kod aslında aynı anlamdadır. Fakat alttaki kod idiyomatik yapıda kullanılmıştır ve okunabilirliği daha yüksektir.
+
+Bazı durumlarda/senaryolarda, atama operatörünün ürettiği değerden faydalanmak çok daha kompakt ve çok daha kolay okunur yapar. 
+
+Örnek;
+
+int main(void)
+{
+	int ch;
+
+	//
+
+	
+	while (1) { // infinitive loop
+	    ch = getchar();
+		if (ch == '\n')
+			break;
+		ch = getchar();
+		printf("%d %c\n", ch, ch);
+
+	}
+}
+
+Örneğin; 
+
+int main(void)
+{
+	int ch;
+
+	//
+
+	while ((ch = getchar()) != '\n') { // getchar()'ın ch'ya atanmış geri dönüş değeri '\n' (new line) olmadığı sürece dönen döngü.
+		printf("%c %d\n", ch, ch);
+}
+}
+
+AÇIKLAMA: Yukarıdaki iki kod aynıdır. Ama atama operatörünün geri dönüş değerinin kullandığımız idiyomatik yapıdaki okunabilirlik ne kadar yüksek olduğu en net şekilde görünmektedir.
+
+
+int main(void)
+{
+	int ch;
+
+	while (ch = getchar() != '\n') {	// Yukarıdaki kodda getchar fonk. geri dönüş değerini ch değerine atadığımız işlemde öncelik parantezi olmasa kod yandaki gibi olacak ve anlamı
+										değişecek.
+		printf("%c %d\n", ch, ch);
+	}
+}
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+																	■	Compound assigment (İşlemli atama operatorleri)
+																	
+																	`=` `+=` `-=` `*=` `/=` `%=` `<<=` `>>=` `&=` `^=` `\|=`
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+►	Tüm assigment operatorlerinin side effect'i vardır.
+
+►	Binary infix operatorlerdir.
+
+►	Comma operator hariç en düşük öncelik seviyesinde
+
+►	Right Associativity (Sağdan sola öncelikli) 
+
+x = x + 5;			x += 5;
+y = y - 3;			y -= 3;
+a = a * 2;			a *= 2;
+b = b / 10;			b /= 10;
+z = z % 60;			z %= 60;																				
+																				
+↓ Örnek;																				
+																				
+int ndigit(int x)																				
+{																				
+	if (x == 0)																				
+		return 1;																				
+	int digit_count = 0;																				
+	while (x != 0) {																				
+		++digit_count;																				
+		x /= 10;																				
+	}																				
+	return digit_count;																				
+}																				
+																				
+int main(void)																				
+{																				
+	int x;																				
+	printf("Bir Tam Sayi Giriniz: ");																				
+	(void)scanf("%d", &x);																				
+	printf("Girilen Sayi %d Basamaklidir.", ndigit(x));																				
+}																				
+
+↓ Örnek;
+
+int sumdigit(int x) 
+{
+	int sum = 0;
+
+	if (x == 0)
+		return 0;
+	while (x != 0) {
+		sum += x % 10;
+		x /= 10;
+	}
+	return sum;
+}
+
+int main(void)
+{
+	int x;
+	printf("Bir Tam Sayi Giriniz: ");
+	(void)scanf("%d", &x);
+	printf("Girilen Sayinin Basamaklari Toplami  %d", sumdigit(x));
+}
+
+Örnek;
+
+int main(void)
+{
+	int day, hour, min, sec;
+	printf("Sureyi Gun, Saat, Dakika ve Saniye Olarak Girin: ");
+	(void)scanf("%d%d%d%d", &day, &hour, &min, &sec);
+
+	min += sec / 60;
+	sec %= 60;
+
+	hour += min / 60;
+	min %= 60;
+
+	day += hour / 24;
+	hour %= 24;
+	printf("%d Gun %d Saat %d Dakika %d Saniye", day, hour, min, sec);
+}
+
+
+
+♦ Bir kodun kolay okunması o kodun kalitesini gösteren en önemli faktördür.
+	
+	► Kod okuma işlemi kod yazma işleminden çok daha fazladır.
+
+	► Kodda hata aramak (Bug fixing)
+
+	► Kodu değiştirmek
+	 
+		☺ Requirement(s) - İster değişmiştir.
+		☺ Algoritmik değişiklikler
+		☺ Efficiency (İşini daha az işlemle yapmasını sağlamak.)
+		☺ Porting (Taşıma) Donanım değişikliği yada işletim sistemi değişikliği sebebiyle başka bir platforma taşınıyordur.
+		☺ Refactoring					  (Tekrar Eden kodu tek bir yerde toplamak)
+		(Kodun kalitesini arttırmak)	  (İsimlendirmeye yönelik çalışma yapılabilir)
+	
+	!  Early optimization is evel ! 
+
+	!  Mikro düzeyde optimizasyon yapmaya çalışmayın.
+
+
+	☼ İDİYOM 
+
+	int main(void)				// 1. KOD 
+	{
+		int x,y,z,t;
+
+		t = foo();
+		z = t;
+		y = z;
+		x = y;
+	}
+
+	
+	int main(void)			// 2. KOD
+	{
+		int x,y,z,y;
+		x = foo();
+		y = foo();
+		z = foo();
+		t = foo();
+	}
+
+	AÇIKLAMA: Bu kod iyi bir kod değil bir kere burada şöyle bir maliyet var; bir fonksiyon 4 kere çağrılıyor. Aslında idiyomatik olarak yazılsaydı atama operatörünün ürettiği değer diğer variable'lara da atanacaktı.
+
+	x = y = z = t = foo(); gibi;
+	
+	↓ Örnek;
+
+	int main(void)
+{
+	int x = 10, y = 20, z = 30, t = 40;
+
+	x += y *= z -= t %= 6;
+
+	printf("t = %d\n", t);
+	printf("z = %d\n", z);
+	printf("y = %d\n", y);
+	printf("x = %d\n", x);
+
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+																				Sequence Point
+																			  (Yan Etki Noktası)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Kaynak kodda öyle bir nokta ki, bu noktadan önceki yan etkiler sequence pointten sonra observable (görünür) olsun.
+
+► Bir sequence pointten önce side effect'e maruz kalmış bir nesnenin değerini kullanmak UB'dir.
+
+↓ Örnek;
+
+int main(void)
+{
+	int x = 10;
+	int y = x++ * x;		//	► Bir sequence pointten önce side effect'e maruz kalmış bir nesnenin değerini kullanmak UB'dir.
+
+	printf("Y = %d\n", y);
+
+}
+
+AÇIKLAMA: Bu kod kesinlikle tanımsız davranış. 
+
+		■ Nerelerde Sequence Point vardır ? 
+
+				► ; (Statement sonu)
+				► İnitialize'da (ilk değer verme listesinde) comma separated list'te virgülden sonraki yerde sequence point vardır.
+
+				↓ Örnek;
+
+				int main(void)
+				{
+					int x = 10, y = x++, z = ++y, t= x + y + z;
+				}
+				
+				↓ Örnek;
+
+				int main(void)
+				{
+					int x = 10;
+					x = x++;		// UB sequence point yok
+				}
+
+				↓ Örnek;
+
+				int main(void)
+				{
+					int x = 10;
+					int y = x + ++x;	// Sequence point yok. UB
+				}
+
+				► Control Statement bir sequence point'tir.
+
+				int main(void)
+				{
+					int x = 10;
+
+					if(++x > 41)
+						printf("%d\n",x)	// UB yok. control statement'larda sequence point vardır.
+				}
+
+				OUTPUT : 11
+
+■ Özetleyecek olursa, Sequance Point Listesi(Şimdilik)
+
+		1.	Statement Sonları
+		2.	İnitializing
+		3.	Control Statement içerisindeki expressionlar'dan sonra sequence point vardır.
+		4.	4 tane operator var ki bunlarda sequence point oluşturur.
+				
+				■  && Operatoru 
+
+				↓ Örnek;
+
+				int foo(int x)
+				{
+					printf("a = %d\n", x);
+					return 1;
+				}
+				int main(void)
+				{
+					int x = 10;
+				
+					int b = ++x > 10 && foo(x);		// burada yan etkiye maruz kalmasına rağmen bir UB olmaz çünkü, && operatoru bir sequence pointtir. 
+				
+					printf("b = %d\n", b);
+				
+				}
+
+				↓ Örnek;	// microsoft mülakat sorusu
+
+				int main(void)
+				{
+					int y = 5;
+					
+					int z = (y = 9) * y;
+
+					printf("z = %d\n",z);
+				}
+
+				CEVAP: Kesinlikle tanımsız davranış.  y = 9 ifadesinden sonra bir sequence point olmadan tekrar y ifadesi kullanılmıştır.
+
+				■  || Operatoru 
+
+				■  Ternary (Conditional) Operator		exp1 ? 3 : 1  (1. operandından sonra bir sequence point vardır.)
+
+				↓ Örnek;
+
+				int main(void)
+				{
+					int x = 0;
+				
+					printf("%d\n", ++x ? x + 7 : x - 3);
+				
+				}
+
+				OUTPUT: 8
+
+				! DİKKAT  C ve C++ dilleri arasında sequence point konusu açısından bazı kural farklılıkları vardır. 
+				---------
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+																				Comma Operators 
+																					 (,)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ ■	Kodda gördüğümüz her virgül (token) bir operatör değildir.
+ ■	Kodda gördüğümüz her parantez (token) bir operatör değildir.
+ ■	Kodda gördüğümüz her * (token) bir operatör değildir.
+
+ ■ NOT: * & [] gibi karakterler bildirimde, bildirimdeki ismi niteleyip türünü anlatmaya yönelikte bunlara 'declarator' deniyor. Ama bir ifade içinde kullanılıyorsa 'declarator' olma ihtimali yoktur.
+
+ ■ Virgül token'ının sentaksın bir bileşeni olması durumu başka bir ifadede kullanılan operator olması başkadır.
+ 
+  ↓ Örnek
+
+		 int main(void)
+		 {
+			int x = 5, y = 7, z = 3; // Comma seperated list. (virgül burada operator değildir.)
+		 }
+  ↓ Örnek
+  int foo(int x,int y) // Buradaki virgülde bir pperator değil, sentaksın bir bileşeni.
+
+  ↓ Örnek
+   foo(x,y)	// Operator değil.
+
+  ↓ Örnek
+  int a[] = {3,6,9}; // Operator değil
+
+  ►	Operator oncelik tablosunun en dibindedir. 
+  ►	Binary infix bir operatordur.
+  ►	Öncelik yönü soldan sağadır.
+
+  ↓ Örnek
+    x = y, 5 // Burada virgül operatorunun sol operandı x = y sağ operandı 5'dir.
+
+  ↓ Örnek
+  x = (y, 5) // Sadece öncelik parantezi olursa virgül operatorunun sol operandı y olurdur.
+
+  ► Virgül operatorunun ürettiği değer sağ operandın değeridir. 
+	
+	↓ Örnek
+	int main(void)
+	{
+		int x = 5, y = 7;
+		int z;
+		z = (x,y);			// Z'nin değeri 7 olurdu.
+		//z = (y,x);		// Z'nin değeri 5 olurdu.
+		x,y;				//(Bu ifadenin değeri sağ operand olan 7'nin değeridir.)
+	}
+
+	↓ Örnek
+	int main(void)
+	{
+		int z = 5;
+
+		if(z++, z>5)
+			printf("%d\n",z);
+	}
+
+	OUTPUT: 6 
+
+	↓ Örnek
+	int main(void)
+{
+	double dval = 3.7;
+
+	if (dval > 3, 0)
+		printf("Dogru\n");
+	else
+		printf("%yanlis");
+}
+
+OUTPUT: Yanlis yazardı. Çünkü gerçek sayı sabitlerinin '.' tokenı yerine ',' token'ı kullanılmıs. Virgül operatorünün ürettiği değer sağ operand olacağı için if parantezi içerisindeki ifadenin değeri
+'0' olacak ve else kısmı bastıracaktı.
+
+  ► Virgül operatorü bir sequence point'tir. (Virgül operatorunun sol operandından sonra bir sequence point vardır.)
+
+  ■	DIKKAT !
+
+  x++;			--> Bir expr. statement
+  y = x;		--> Bir expr. statement
+  z = x + y;	--> Bir expr. statement
+
+  *************
+
+  x++, y = x, z = x + y; (3 exprission statement'ı 3 ayrı statement yapmakla virgül operatorunun operandı yapıp tek bir expression statement yapabilirim anlam değişmez.)
+
+  ↓ Örnek
+  int main(void)
+{
+	int x = 5, y = 7;
+
+	int temp;
+
+	temp = x, x = y,y = temp;
+	printf("x = %d y = %d", x, y);
+}
+
+
+
+Neden comma operators kullanıyoruz ? 
+
+	1. 
+
+										int main(void)
+										{
+											int x = 5;
+
+											if (x > 5)
+												printf("Dogru\n");
+												x++;
+												printf("%d",x);
+										}
+
+										AÇIKLAMA: Normalde if deyiminin kendisinden sonra gelen ilk deyimi if bloğuna bağlıdır. Fakat sonraki statementlar eğer block içerisinde değilse else dahil olur.
+										Yani x > 5 expr. doğru olmadığı için x'in değeri bir arttırılacak ve konsola '6' yazacaktır.
+										ama eğer,
+
+										int main(void)
+										{
+											int x = 5;
+
+											if (x > 5)
+												printf("Dogru\n"), x++;
+												printf("%d",x);
+										}
+
+										Şeklinde yazılmış olsaydı, burada konsola x'in değeri olarak 6 yazacaktı. 
+
+	2.									İdiyomatik Yapılardan kaynaklı: Kontrol deyimlerinin parantezleri içerisinde, bir koşul ifadesi kullanmak istiyoruz ama koşul ifadesinden önce bir işlem yapmak istiyoruz.
+
+										int foo(void);
+										int bar(void);
+										int main(void)
+										{
+											int ret;
+											
+											//1
+											ret = foo();
+											if(ret > 10)
+												bar(ret);
+											//2 (Atama operatorünün ürettiği değerden faydalanarak yazılırsa)
+
+											if((ret = foo() > 10)
+												bar(ret);
+
+											//3 Virgül operatörünü kullanmak
+
+											if(ret = foo(), ret > 10)	// Önce foo'nun geri dönüş değeri ret variable'ına atanıyor ama değer virgül operatürünün sağ operandı. 
+												bar(ret);
+
+											// Bu üç kod arasında anlamsal olarak herhangi bir fark yoktur.
+
+										}
+
+										
+3 saat 15. dakikada kaldım.
+
+Virgül Operatörü;
+
+	a.	virgül operatörünün ürettiği değerden faydalanan idiomlarda
+	b.	Bazı makro tekniklerinde 
+	c.	bloklamaktan kaçınmak için
+
+		  

@@ -1,0 +1,672 @@
+
+	C dilinde main fonksiyonunun geri dönüþ türünün int olmasý bir zorunluluktur.(Önceki standartlarda void olabiliyordu.)
+
+int main(void)
+{
+	// .... code 
+}
+
+	NOT:	Aksi yönde bir belirleme olmadýkça, main fonksiyonunun geri dönüþ deðeri programýn baþarýsýný temsil eder. 
+
+	0 döndürmesi main fonksiyonunun baþarýlý olduðunu (yapmasý gerekeni yaptýðýný, iþini yapmasýyla ilgili bir sorun olmadýðý anlamýna gelir)
+	non - zero bir deðer döndürmesi program yapmasý gereken iþi yapamadý. Baþarýsýz oldu demek.
+
+
+	Main fonksiyonu void fonksiyon yapmakla aslýnda 2 olanaktan faydalanmamýþ oluyoruz;
+
+		1.	Ýþletim sistemi altýnda koþacaksa main fonk çýkýþ kodunu kullanma imkanýndan vazgeçiyoruz.
+		2.	Kodu okuyan açýsýndan okumada zorluk çýkýyor kodun ne amaçla yazýldýðýný return ifadesinden anlayabiliyor.
+
+	NOT: Function Overloading: C# / C++ gibi dillerde olan bir araç.
+	
+		(Function overloading) Ayný isimli birden fazla fonksiyon olabilir. 
+
+		
+
+	Örneðin; derleyici 2. max fonksiyonunu gördüðünde hata verecektir. C++ ise hata vermeyecektir. C dilinde bu tarz bir durumu düzeltmek için yapabileceðimiz tek þey fonksiyonu deðiþtirmek olacaktýr.
+
+		
+int max(int x, int y)
+{
+	return x > y ? x : y;
+}
+
+double max(double x, double y)
+{
+	return x > y ? x : y;
+}
+
+int max3(int x, int y, int z)
+{
+	int max = x;
+	if (y > max)
+		max = y;
+	if (z > max)
+		max = z;
+	return max;
+}
+
+	NOT:	C de generic fonksiyon oluþturmanýn birden fazla yolu vardýr;
+		
+			1. Variadic fonkction
+			2. Preprocessor
+			3. void pointer yolu.
+
+	
+
+DÝKKAT:
+
+//_AdvanceProgrammingForC\_advanceProgrammig\FileName.c(6,8): warning C4131: 'foo': eski stil bildirimci kullanýyor (old-style function defination)
+double foo(a, b, c)
+double a, b, c;
+{
+	return a * b - c;
+}
+
+
+int max(int x, int y)
+{
+	return x > y ? x : y; // Yeni style bu ve geçerli olan bu
+}
+
+NOT: C++ dilinde old-style function defination hiçbir zaman geçerli olmamýþtýr.
+
+																Fonksiyon Çaðrýlarý
+
+to call a function
+function call 
+
+function call is an expression 
+
+		DÝKKAT ! : Çaðýrýlan fonksiyonun kaç tane parametresi var ise fonksiyon çaðrýsýnda ilgili fonksiyonun parametre sayýsý kadar argüman gönderme yükümlülüðümüz vardýr. 
+
+	NOT: Argument is an expression
+
+	NOT: Derleyici fonksiyon çaðrý ifadesi gördüðünde önce fonksiyona gönderilen argüman olan ifadenin deðerini hesaplýyor.
+
+	 
+	 
+	 int foo(int x,int y, int z)
+	 {
+		///
+		return 1;
+	 }
+
+	 int main(void)
+	 {
+		foo(1,6,7);
+
+	 }
+
+	 // Fonksiyonun kaç tane parametre deðiþkeni varsa o kadar sayýsa argüman göndermekle yükümlüyüz. Ne daha azý ne daha fazlasý.
+
+
+	 Fonksiyon çaðrý ifadelerinde önce fonksiyona gönderilen argüman ifadelerinin deðeri hesaplanýr. Daha sonra hesaplanan bu deðerler fonksiyonun parametre deðiþkenlerine kopyalanýr.
+
+	 Eðer bir fonksiyon void fonksiyon deðil ise o fonksiyona yapýlan çaðrý ifadesinin deðeri fonksiyonun geri dönüþ deðeridir. 
+
+	 void fonksiyonlara yapýlan çaðrý ifadelerinin türü void'türüdür ve deðerleri yoktur.
+
+
+	 Örneðin;
+
+int max(int a, int b)
+{
+	if (a > b)
+		return a;
+	else
+		return b;
+
+}
+
+int main(void)
+{
+	max(3, 5); // Bu ifadenin türü int'tir. Çünkü çaðrýlan fonksiyonun geri dönüþ türü int'tir. Ýfadenin deðeri ise çaðrýlan fonksiyonun geri dönüþ deðeridir.
+}
+------------------------------------------------------------------------------------------------------
+
+double max(int a, int b)
+{
+	if (a > b)
+		return a;
+	else
+		return b;
+
+}
+
+int main(void)
+{
+	max(3, 5); // Bu ifadenin türü double'dýr. Çünkü çaðrýlan fonksiyonun geri dönüþ türü double'dýr. Ýfadenin deðeri ise çaðrýlan fonksiyonun geri dönüþ deðeridir.
+
+}
+
+------------------------------------------------------------------------------------------------------
+
+void foo(int x)
+{
+	// code
+}
+
+
+
+int main(void)
+{
+	foo(5); // Bu bir ifadedir. Türü void, deðeri 'void türden ifadelerin deðeri olmaz';
+}
+
+------------------------------------------------------------------------------------------------------
+
+void foo(int x)
+{
+	// code
+}
+
+
+
+int main(void)
+{
+	foo(5) + 10; // burada foo(5) ifadesinin türü void olduðu ve deðeri olmayacaðý için sentaks hatasý olacaktýr. 
+}
+
+------------------------------------------------------------------------------------------------------
+
+void foo(int x)
+{
+	// code
+}
+
+
+
+int main(void)
+{
+	int a = foo(5); //Atama operatörünün sað operandý yapsam, atama operatörünün sað operandýnýn bir deðer taþýmasý gerektiði için sentaks hatasý olur.
+}
+
+------------------------------------------------------------------------------------------------------
+
+	NOT:	Void bir fonksiyona yapýlan çaðrý ifadesinin tek bir istisna hariç tek kullanýlma biçimi bu ifadeyi sonuna ';' koyarak bir expression statement haline getirmek.
+
+	Örnek;
+	
+#include <stdio.h>
+
+void ekrana_yaz(const char *mesaj) {
+    printf("%s\n", mesaj);
+}
+
+int main(void) {
+    ekrana_yaz("Merhaba Dünya!");  // yalnýzca yan etki: ekrana yazma
+    ekrana_yaz("Program bitti.");  // dönüþ deðeri yok, sadece iþ yapýyor
+    return 0;
+}
+
+
+Örnek;
+
+int sayac = 0;
+
+void arttir(void) 
+{
+    sayac++;   // global deðiþkeni artýrýyor
+}
+
+int main(void) {
+    arttir();   // sayac = 1
+    arttir();   // sayac = 2
+    return 0;
+}
+
+------------------------------------------------------------------------------------------------------
+
+Örnek;
+
+int ndigit(int x)
+{
+	if (x == 0)
+		return 1;
+	int digit_count = 0;
+	while (x) {
+		++digit_count;
+		x /= 10;
+	}
+	return digit_count;
+}
+
+int main(void)
+{
+	int x = 9, y = 12;
+	printf("Digit Number : %d\n", ndigit(x * y));
+}
+
+
+------------------------------------------------------------------------------------------------------
+
+
+Bir ifadenin deðerini kullanabileceðim her yerde fonksiyon çaðrýsý ifadesinin deðerinide kullanabilirim. 
+
+Örnek;
+
+int ndigit(int x)
+{
+	if (x == 0)
+		return 1;
+	int digit_count = 0;
+	while (x) {
+		++digit_count;
+		x /= 10;
+	}
+	return digit_count;
+}
+
+int main(void)
+{
+	int x = 76234;
+	int n = ndigit(x);
+}
+
+int n = ndigit(x) --> Deðiþkene verilen ilk deðer olarak kullanabilirim.
+
+Örnek;
+
+int ndigit(int x)
+{
+	if (x == 0)
+		return 1;
+	int digit_count = 0;
+	while (x) {
+		++digit_count;
+		x /= 10;
+	}
+	return digit_count;
+}
+
+int main(void)
+{
+	int x = 76234;
+	int y = 6512;
+
+   int sum =  ndigit(x) + ndigit(y);
+
+}
+
+
+Örnek;
+
+int ndigit(int x)
+{
+	if (x == 0)
+		return 1;
+	int digit_count = 0;
+	while (x) {
+		++digit_count;
+		x /= 10;
+	}
+	return digit_count;
+}
+
+int main(void)
+{
+	int x = 76234;
+	int y = 6512;
+
+    if(ndigit(x) == ndigit(y))
+		// ... code;
+	else
+		// ... code;
+
+}
+
+DIKKAT: Fonksiyon çaðrý ifadesi global namespace'de olamaz. Sentaks hatasýdýr.
+
+		DIKKAT: Fonksiyon (tanýmý) içinde fonksiyon tanýmlanamaz, fonksiyon (tanýmý) dýþýnda fonksiyon çaðrýlamaz.
+		
+
+											C ve C++ dillerinde Fonksiyon Çaðrýlarýnýn Tipik Olarak Karþýmýza Çýkma Biçimi
+											---------------------------------------------------------------------------------
+
+											1.Kullaným
+Örnek;
+
+int ndigit(int x)
+{
+	if (x == 0)
+		return 1;
+	int digit_count = 0;
+	while (x) {
+		++digit_count;
+		x /= 10;
+	}
+	return digit_count;
+}
+
+int main(void)
+{
+	int ival = 723;
+	//
+
+	ndigit(ival); // Bir fonksiyonun geri dönüþ deperini kullanmamak (to discard the return value) bir sentaks hatasý deðildir.
+				  // Kesinlikle bir Logic hatadýr.
+
+} 
+
+											2. Kullaným
+Örnek;
+
+int ndigit(int x)
+{
+	if (x == 0)
+		return 1;
+	int digit_count = 0;
+	while (x) {
+		++digit_count;
+		x /= 10;
+	}
+	return digit_count;
+}
+
+int main(void)
+{
+	int ival = 723;
+	//
+
+	int n = ndigit(ival); // Fonksiyon çaðrý ifadesinden elde edilen geri dönüþ deðeri bir deðiþkende saklanabilir.
+
+} 
+
+	NOT: Neden fonksiyon çaðrýsýndan elden edilen bir deðeri deðiþkende saklarýz ? 
+
+				1. Eðer bu deðeri birden fazla yerde kullanacaksam.
+				(Ayný geri dönüþ deperini elde edeceksek, fonksiyonu 2. / 3. / 4. kez çaðýrmayýnýz ! )
+
+				Geri dönüþ deðerini bir deðiþkende saklayýn ve fonksiyonu tekrar çaðýrmak yerine o deðiþkenin deðerini kullanýn.
+				Eðer tersini yaparsak bu kesinlikle KÖTÜ KOD'DUR ! Neden;
+						
+							1.	Okuyaný yanýltýr.
+							2.	Verim kaybý
+
+			    2. Statement eðer çok uzun oluyorsa o noktada da geri dönüþ deðeri bir deðiþkende tutulabilir. Çünkü kodun okunabilirliði ciddi oranda azalýr.
+
+										3. Kullaným : Doðrudan ifadenin kendisinde kullanmak.
+										4. Kullaným : iç içe fonksiyon çaðrýlmalarý.
+
+Örnek;
+
+
+
+int sum_square(int a, int b)
+{
+	return a * a + b * b;
+}
+
+int ndigit(int a)
+{
+	if (a == 0)
+		return 1;
+	int digit_count = 0;
+	while (a) {
+		++digit_count;
+		a /= 10;
+	}
+	return digit_count;
+}
+
+int main(void)
+{
+	int a, b;
+	printf("Sirasiyla 2 Tam Sayi Giriniz: \n");
+	(void)scanf("%d%d", &a, &b);
+	printf("Girilen Sayilarin Basamak Sayilarinin Karelerinin Toplami = %d", sum_square(ndigit(a),ndigit(b)));
+}
+
+
+Örnek; // Girilen 4 Sayýdan en büyük 2 tanesini seçen program 
+
+int max2(int x, int y)
+{
+	return x > y ? x : y;
+}
+
+
+
+int main(void)
+{
+	int x, y, z, t;
+	printf("Sirasi ile 4 Tam Sayi Giriniz : \n");
+	(void)scanf("%d%d%d%d", &x, &y, &z, &t);
+	printf("Girilen 4 Sayidan En Buyugu %d", max2(max2(x, y), max2(z, t)));
+	return 
+}
+
+
+
+					DIKKAT ! TOPLARLAYACAK OLURSAK;
+
+										1. G.D.D DISCARD EDILMESI
+										2. G.D.D BIR DEGISKENDE SAKLANMASI
+										3. G.D.D BIR IFADEDE BIR OPERATORUN OPERANDI OLMASI 
+										4. G.D.D BIR FONKSIYON CAGRISINDA ARGUMAN IFADESI YAPILMASI
+										5. G.D.D RETURN IFADESINDE KULLANILMASI
+
+
+
+
+	NOT: (void)scanf --> Dediðimde '(void)' bburada typecast operator olarak isimlendiriyor. Ýlgili fonksiyonun geri dönüþ deðerini bilerek ve isteyerek discard ettiðini belirtmek amacýyla yazýyor.
+
+	DIKKAT: C++'da [[nodiscard]] int isprime(int) Attribute'ü kullanýlýrsa. Burada þunu yapýyoruz. Bu fonksiyonun geri dönüþ deðerini kullanmazsam kesinlikle logic hata olur. Ama C dilinde böyle bir özellik yok.
+
+	NOT: printf'in geri dönüþ deðeri std. out'a yazýlan karakter sayýsýdýr. 
+
+	Örnek;
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <math.h>
+
+int main(void)
+{
+	int n = printf("Haldun");
+
+	printf(" n = %d\n", n);
+
+}
+
+
+																					Variadic Function
+
+Variadic Function demek çaðýran kodun ilgili fonksiyona belirli kurallar doðrultusunda istediði kadar argüman gönderebilmesi demektir. 
+
+
+'...' (Üç noktanýn yan yana yazýlmasýya oluþan token'a ellipsis token'ý denir.) C dilinde ellipsis token'ý 2 yerde kullanýlýyor (C++'da çok daha fazla yerde);
+
+		1. Variadic Function
+		2. Variadic Makrolarda
+
+Bir function'ýn variadic olmasý fonksiyonun bildiriminde yada tanýmýnda son parametre deðiþkeni yerine ellipsis token'ýnýn yazýlmasýndan anlaþýlýyor.
+
+
+int func(int x,int y)
+{
+	// ... code						// Bu fonksiyon variadic deðil.
+}
+
+int func(int x,int y, ...)
+{
+	// ... code						// Bu fonksiyon variadic.
+}
+
+
+NOT: C dilinde Variadic fonksiyonda, variadic parametreden önce en az bir tane parametre olmalýdýr. C++ ise böyle bir zorunluluk yoktur. 
+
+NOT: Variadic bir fonksiyona çaðrý yapan kodda, variadic parametreden önceki tüm parametrelere argüman göndermek zorunludur.  
+
+int printf(const char*, ...)
+
+int main(void)
+{
+	int x = 1, y = 2, z = 3;
+
+	// printf(); // error
+	printf("Ozan\n");
+
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Mülakat SORUSU : Printf fonksiyonlarý çaðrýldýðýnda std output'a ne yazýlýr ? 
+
+
+
+int foo(int x)
+{
+	x = 99999;
+}
+
+
+int main(void)
+{
+	int i = 10;
+
+	printf("i = %d\n", i);
+	foo(i);
+	printf("i = %d", i);
+}
+
+Fonksiyon çaðrýlarý iki kategoriye ayrýlýyor;
+
+		1.	call by value		 (pass by value)
+		2.	call by referance	 (pass by referance)
+
+
+				Mülakat Sorusudur : C dilinde default olarak tüm fonksiyon çaðrýlarý call by value'dur. Yani yukarýdaki örnekten yola çýkacak olursak;
+
+				foo(i) fonksiyona yapýlan bu çaðrýda, foo fonksiyonunun parametre deðiþkeni olan x ayrý bir deðiþken olarak hayata geliyor, sadece deðerini yapýlan çaðrýdaki argüman olan i'den alýyor. Yani i'nin kendisi olmuyor.
+				Herhangi bir mülakatta foo fonksiyonunun kodunu görmeden main fonksiyonundaki 2. printf fonksiyonunun std. output'a ne yazacaðý sorulursa foo fonksiyonunu görmeden direkt olarak '10' dememiz gerekir çünkü bu standart
+				ile garanti altýna alýnmýþtýr. 
+
+				C dilinde tüm fonksiyon çaðrýlarý call by value ise, Call By referance nasýl oluyor ? ---> Pointer kavramý. C de fonksiyon çaðrýsýnýn call by referance olmasý için fonksiyona gönderilen çaðrýnýn bir adres olmasý gerekiyor. (foo(&i);) gibi.
+
+
+		EÐER BU SORU C++ DÝLÝ ÝÇÝN SORULMUÞ OLSAYDI;
+
+int main(void)
+{
+	int i = 10;
+
+	printf("i = %d\n", i);
+	foo(i);
+	printf("i = %d", i);
+}
+
+558. satýrdaki printf fonksiyonu std. output'a ne yazar ? olsaydý kesinlikle verilmesi gereken cevap C dilinde verdiðimniz cevabýn aksine, foo fonksiyonunun tanýmýný veya bildirimini görmemiz gerekiyor olurdu ? Neden açýklayalým;
+
+
+int foo(int x)
+{
+	x = 99999;				/// Fonksiyon tanýmý bu þekilde yapýlmýþ olsaydý cevap, call by value olacaktý.
+}
+
+
+
+int main(void)
+{
+	int i = 10;
+
+	printf("i = %d\n", i);
+	foo(i);
+	printf("i = %d", i);
+}
+
+*********************************************************************************************************************
+
+int foo(int& x)
+{
+	x = 99999;				/// Fonksiyon tanýmý bu þekilde yapýlmýþ olsaydý bu sefer , call by referance olacaktý.
+}
+
+
+
+int main(void)
+{
+	int i = 10;
+
+	printf("i = %d\n", i);
+	foo(i);
+	printf("i = %d", i);
+}
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+			
+
+
+//		SWAP ISLEMI YAPAN FONKSIYON 
+
+
+void swap(int* x, int* y)
+{
+	int temp = *x; // dereferencing - indirection 
+	*x = *y;
+	*y = temp;
+}
+
+
+
+int main(void)
+{
+	int x = 66;
+	int y = 44;
+
+	printf("X = %d Y = %d\n", x, y); //1
+	swap(&x, &y);
+	printf("X = %d Y = %d\n", x, y);
+
+}
+
+
+
+/// C ++ Kodu
+
+void foo(int x = 30, int y = 20, int z = 10)
+{
+	printf(" x = %d y = %d z = %d\n", x, y, z);
+}
+
+int main(void)
+{
+	foo(1, 2,3);
+	foo(1, 2);
+	foo(1);
+	foo();
+}
+
+// OVERLOADING C' DE YOKTUR AMA C++'DA VARDIR. ASAGIDAKI KOD C++ DÝLÝNE AITTIR. 
+
+
+
+void func(int x)
+{
+	printf("func (int x) x = %d\n", x);
+}
+
+void func(double d)
+{
+	printf("func (double d) d = %f\n", d);
+}
+
+void func(int x, int y)
+{
+	printf("func (int x, int y) x = %d y = %d\n", x, y);
+}
+
+int main(void)
+{
+	func(3);
+	func(3.5);
+	func(10, 200);
+}
+
+AÇIKLAMA: BURADA DERLEYICI, COMPILE TIME DA GONDERILEN PARAMETREYE GORE ILGILI FUNC FONK. CAGIRIYOR. BU OLAYA OVERLOADING OLAYI DENIYOR VE C DILINDE OLMAMASINA KARSIN C++ DILINDE MEVCUTTUR.
